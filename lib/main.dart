@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:management/src/view/data_page.dart';
 import 'package:management/src/view/home_page.dart';
-import 'package:management/src/view/reward_page.dart';
-import 'package:management/src/view/task_page.dart';
+import 'package:management/src/view/reward/reward_page.dart';
+import 'package:management/src/view/task/task_page.dart';
 
 void main() {
   runApp(const MyApp());

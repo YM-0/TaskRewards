@@ -1,38 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:management/main.dart';
-import 'package:management/src/model/task.dart';
-import 'package:management/src/store/reward_list_store.dart';
-import 'package:management/src/view/reward_input_page.dart';
+import 'package:management/src/model/list_model.dart';
+import 'package:management/src/store/task_list_store.dart';
+import 'package:management/src/view/task/task_input_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:management/src/store/total_point_store.dart';
-import 'package:management/src/store/task_list_store.dart';
+import 'package:management/src/store/point_store.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class RewardPage extends StatefulWidget {
-  const RewardPage({Key? key}) : super(key: key);
+class TaskPage extends StatefulWidget {
+  const TaskPage({Key? key}) : super(key: key);
 
   @override
-  State<RewardPage> createState() => _RewardPageState();
+  State<TaskPage> createState() => _TaskPageState();
 }
 
 // Taskリスト表示
 // Taskの追加/編集画面へ遷移
 // Taskの削除
 
-class _RewardPageState extends State<RewardPage> {
+class _TaskPageState extends State<TaskPage> {
   // ストアクラス
-  final RewardeListStore _rewardStore = RewardeListStore();
   final TaskListStore _taskStore = TaskListStore();
   final TotalPointStore _pointStore = TotalPointStore();
 
   // Taskリスト入力画面に遷移する
-  void _pushRewardInputPage([Task? reward]) async {
+  void _pushTaskInputPage([Task? task]) async {
     await Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
-        print("リワード追加画面へ遷移");
-        return RewardInputPage(reward: reward);
+        print("タスク追加画面へ遷移");
+        return TaskInputPage(task: task);
       }),
     );
     // 画面更新
@@ -47,13 +45,14 @@ class _RewardPageState extends State<RewardPage> {
     Future(
       () async {
         // ストアからTaskリストデータをロードし、画面を更新する
-        _rewardStore.load();
+        _taskStore.load();
         setState(() {});
         print("ロード");
       },
     );
   }
 
+  // ボトムシートを表示
   void _showModalBottomSheet(Task item) {
     showModalBottomSheet(
         context: context,
@@ -108,20 +107,13 @@ class _RewardPageState extends State<RewardPage> {
                   child: ElevatedButton(
                     onPressed: () {
                       print(item.point);
-                      if ((_pointStore.totalPoint - item.point) >= 0) {
-                        _pointStore.minus(item.point);
-                        Fluttertoast.showToast(
-                          msg: '報酬獲得\n${item.point}ポイント消費',
-                        );
-                      } else {
-                        Fluttertoast.showToast(
-                          msg: 'ポイントが足りません',
-                        );
-                      }
-                      _pointStore.save();
+                      _pointStore.plus(item.point);
+                      Fluttertoast.showToast(
+                        msg: 'タスク完了\n${item.point}ポイント獲得',
+                      );
                       Navigator.of(context).pop();
                     },
-                    child: const Text("報酬獲得"),
+                    child: const Text("ポイント獲得"),
                   ),
                 ),
                 Container(
@@ -132,7 +124,7 @@ class _RewardPageState extends State<RewardPage> {
                     },
                     child: const Text(
                       "キャンセル",
-                      style: TextStyle(color: Color.fromARGB(255, 37, 36, 36)),
+                      style: TextStyle(color: Colors.black),
                     ),
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.white),
@@ -159,60 +151,97 @@ class _RewardPageState extends State<RewardPage> {
             if (oldIndex < newIndex) {
               newIndex -= 1;
             }
-            final Task item = _rewardStore.list.removeAt(oldIndex);
-            _rewardStore.list.insert(newIndex, item);
+            final Task item = _taskStore.list.removeAt(oldIndex);
+            _taskStore.list.insert(newIndex, item);
           });
         },
         // Taskの件数をリストの件数とする
-        itemCount: _rewardStore.count(),
+        itemCount: _taskStore.count(),
         itemBuilder: (context, index) {
           // インデックスに対応するTaskを取得する
-          var item = _rewardStore.findByIndex(index);
-          return Card(
-            // 並び替え用のKey設定
+          var item = _taskStore.findByIndex(index);
+          return Slidable(
             key: Key(item.id.toString()),
-            // デザイン
-            margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-            elevation: 5,
-            shadowColor: Colors.black,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: Card(
+              // 並び替え用のKey設定
+              key: Key(item.id.toString()),
+              // デザイン
+              margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              elevation: 5,
+              shadowColor: Colors.black,
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
 
-            child: ListTile(
-              // ID
-              //leading: Text(item.id.toString()),
+              child: Slidable(
+                // 右スライド
+                startActionPane: ActionPane(
+                  motion: const ScrollMotion(),
+                  extentRatio: 0.25,
+                  children: [
+                    SlidableAction(
+                      onPressed: (context) {
+                        // Todo編集画面に遷移する
+                        _pushTaskInputPage(item);
+                      },
+                      backgroundColor: Colors.yellow,
+                      icon: Icons.edit,
+                      label: '編集',
+                    ),
+                  ],
+                ),
+                endActionPane: ActionPane(
+                  motion: const ScrollMotion(),
+                  extentRatio: 0.25,
+                  children: [
+                    SlidableAction(
+                      onPressed: (context) {
+                        // Todoを削除し、画面を更新する
+                        setState(() => {_taskStore.delete(item)});
+                      },
+                      backgroundColor: Colors.red,
+                      icon: Icons.edit,
+                      label: '削除',
+                    ),
+                  ],
+                ),
 
-              leading: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(item.color),
+                child: ListTile(
+                  // ID
+                  //leading: Text(item.id.toString()),
+                  leading: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(item.color),
+                    ),
+                    width: 25,
+                  ),
+                  // 名前
+                  title: Text(
+                    item.name,
+                    style: GoogleFonts.oswald(fontSize: 18),
+                  ),
+                  // ポイント
+                  trailing: Wrap(children: [
+                    Text(
+                      item.point.toString() + " P",
+                      style: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                    //Icon(Icons.more_vert),
+                  ]),
+                  // ボトムシートを表示
+                  onTap: () {
+                    _showModalBottomSheet(item);
+                  },
                 ),
-                width: 25,
               ),
-              // 名前
-              title: Text(
-                item.name,
-                style: GoogleFonts.oswald(fontSize: 18),
-              ),
-              // ポイント
-              trailing: Wrap(children: [
-                Text(
-                  item.point.toString() + " P",
-                  style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                //Icon(Icons.more_vert),
-              ]),
-              onTap: () {
-                _showModalBottomSheet(item);
-              },
             ),
           );
         },
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: _pushRewardInputPage,
+        onPressed: _pushTaskInputPage,
         child: const Icon(Icons.add),
       ),
     );

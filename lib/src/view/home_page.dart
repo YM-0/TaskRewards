@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:management/main.dart';
-import 'package:management/src/store/total_point_store.dart';
+import 'package:management/src/store/point_store.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

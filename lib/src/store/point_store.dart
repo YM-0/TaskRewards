@@ -22,19 +22,23 @@ class TotalPointStore {
   // TotalPointに加算する
   void plus(int point) {
     totalPoint += point;
+    save();
   }
 
   // TotalPointから減算する
   void minus(int point) {
     totalPoint -= point;
+    save();
   }
 
+  // TotalPointを保存する
   void save() async {
     var prefs = await SharedPreferences.getInstance();
     var saveTargetInt = totalPoint;
     prefs.setInt(_saveKey, saveTargetInt);
   }
 
+  // TotalPointを読み込みする
   void load() async {
     var prefs = await SharedPreferences.getInstance();
     var loadTargetInt = prefs.getInt(_saveKey) ?? 0;

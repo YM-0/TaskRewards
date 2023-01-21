@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:management/src/model/task.dart';
+import 'package:management/src/model/list_model.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:management/src/store/reward_list_store.dart';
 

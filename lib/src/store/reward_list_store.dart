@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:management/src/model/task.dart';
+import 'package:management/src/model/list_model.dart';
 import 'dart:convert';
 
 // TaskStoreクラス
