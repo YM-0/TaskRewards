@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:management/main.dart';
-import 'package:management/src/store/data_store.dart';
+import 'package:management/src/store/history_store.dart';
 import 'package:management/src/model/list_model.dart';
 import 'package:management/src/store/reward_list_store.dart';
 import 'package:management/src/view/reward/reward_input_page.dart';
@@ -29,7 +29,7 @@ class _RewardPageState extends State<RewardPage> {
   final DataStore _dataStore = DataStore();
 
   // Taskリスト入力画面に遷移する
-  void _pushRewardInputPage([Task? reward]) async {
+  void _pushRewardInputPage([Item? reward]) async {
     await Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
         print("リワード追加画面へ遷移");
@@ -55,7 +55,7 @@ class _RewardPageState extends State<RewardPage> {
     );
   }
 
-  void _showModalBottomSheet(Task item) {
+  void _showModalBottomSheet(Item item) {
     showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
@@ -160,7 +160,7 @@ class _RewardPageState extends State<RewardPage> {
             if (oldIndex < newIndex) {
               newIndex -= 1;
             }
-            final Task item = _rewardStore.list.removeAt(oldIndex);
+            final Item item = _rewardStore.list.removeAt(oldIndex);
             _rewardStore.list.insert(newIndex, item);
           });
         },

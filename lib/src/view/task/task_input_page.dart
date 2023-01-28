@@ -10,7 +10,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 /// ・Todo入力画面の状態を生成する
 class TaskInputPage extends StatefulWidget {
   /// Todoのモデル
-  final Task? task;
+  final Item? task;
 
   /// コンストラクタ
   /// Todoを引数で受け取った場合は更新、受け取らない場合は追加画面となる

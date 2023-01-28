@@ -10,7 +10,7 @@ import 'package:management/src/store/reward_list_store.dart';
 /// ・Todo入力画面の状態を生成する
 class RewardInputPage extends StatefulWidget {
   /// Todoのモデル
-  final Task? reward;
+  final Item? reward;
 
   /// コンストラクタ
   /// Todoを引数で受け取った場合は更新、受け取らない場合は追加画面となる

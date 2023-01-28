@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:management/src/view/data_page.dart';
+import 'package:management/src/view/history_page.dart';
 import 'package:management/src/view/home_page.dart';
 import 'package:management/src/view/reward/reward_page.dart';
 import 'package:management/src/view/task/task_page.dart';
@@ -68,9 +68,9 @@ class _NavigationState extends State<Navigation> {
             label: 'Reward',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.leaderboard),
-            icon: Icon(Icons.leaderboard_outlined),
-            label: 'Data',
+            selectedIcon: Icon(Icons.calendar_month),
+            icon: Icon(Icons.calendar_month_outlined),
+            label: 'History',
           ),
         ],
       ),

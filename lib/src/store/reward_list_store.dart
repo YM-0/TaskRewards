@@ -9,7 +9,7 @@ class RewardeListStore {
   final String _saveKey = "Reward";
 
   // Taskリスト
-  List<Task> list = [];
+  List<Item> list = [];
 
   // ストアのインスタンス
   static final RewardeListStore _instance = RewardeListStore._internal();
@@ -29,7 +29,7 @@ class RewardeListStore {
   }
 
   // 指定したインデックスのTaskを取得する
-  Task findByIndex(int index) {
+  Item findByIndex(int index) {
     return list[index];
   }
 
@@ -37,13 +37,13 @@ class RewardeListStore {
   void add(String name, int point, int color) {
     var model = "Reward";
     var id = count() == 0 ? 1 : list.last.id + 1;
-    var task = Task(id, name, point, color, model);
+    var task = Item(id, name, point, color, model);
     list.add(task);
     save();
   }
 
   // Taskを更新する
-  void update(Task task, [String? name, int? point, int? color]) {
+  void update(Item task, [String? name, int? point, int? color]) {
     if (name != null) {
       task.name = name;
     }
@@ -57,7 +57,7 @@ class RewardeListStore {
   }
 
   // Taskを削除する
-  void delete(Task task) {
+  void delete(Item task) {
     list.remove(task);
     save();
   }
@@ -77,6 +77,6 @@ class RewardeListStore {
     // SharedPreferencesはプリミティブ型とString型リストしか扱えないため、以下の変換を行っている
     // StringList形式 → JSON形式 → MAP形式 → TodoList形式
     var loadTargetList = prefs.getStringList(_saveKey) ?? [];
-    list = loadTargetList.map((a) => Task.fromJson(json.decode(a))).toList();
+    list = loadTargetList.map((a) => Item.fromJson(json.decode(a))).toList();
   }
 }

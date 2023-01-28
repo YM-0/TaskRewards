@@ -4,7 +4,7 @@ import 'package:management/src/model/list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:management/main.dart';
 import 'package:management/src/model/list_model.dart';
-import 'package:management/src/store/data_store.dart';
+import 'package:management/src/store/history_store.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class DataPage extends StatefulWidget {
@@ -24,7 +24,7 @@ class _DataPageState extends State<DataPage> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
 
   Map<DateTime, List> _testList = {}; // テスト
-  List<Task> list = []; // テスト
+  List<Item> list = []; // テスト
 
   @override
   void initState() {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:management/main.dart';
 import 'package:management/src/model/list_model.dart';
-import 'package:management/src/store/data_store.dart';
+import 'package:management/src/store/history_store.dart';
 import 'package:management/src/store/task_list_store.dart';
 import 'package:management/src/view/task/task_input_page.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,7 +28,7 @@ class _TaskPageState extends State<TaskPage> {
   final DataStore _dataStore = DataStore();
 
   // Taskリスト入力画面に遷移する
-  void _pushTaskInputPage([Task? task]) async {
+  void _pushTaskInputPage([Item? task]) async {
     await Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
         print("タスク追加画面へ遷移");
@@ -55,7 +55,7 @@ class _TaskPageState extends State<TaskPage> {
   }
 
   // ボトムシートを表示
-  void _showModalBottomSheet(Task item) {
+  void _showModalBottomSheet(Item item) {
     showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
@@ -154,7 +154,7 @@ class _TaskPageState extends State<TaskPage> {
             if (oldIndex < newIndex) {
               newIndex -= 1;
             }
-            final Task item = _taskStore.list.removeAt(oldIndex);
+            final Item item = _taskStore.list.removeAt(oldIndex);
             _taskStore.list.insert(newIndex, item);
           });
         },

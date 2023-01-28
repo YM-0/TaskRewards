@@ -8,7 +8,7 @@ class DataStore {
   final String _saveKey = "events";
 
   // イベントマップリスト
-  Map<DateTime, List<Task>> eventsList = {};
+  Map<DateTime, List<Item>> eventsList = {};
 
   // ストアのインスタンス
   static final DataStore _instance = DataStore._internal();
@@ -28,7 +28,7 @@ class DataStore {
   }
 
   // Mapの要素をStringへ変換 (Map<DateTime, List> → Map<String, StringList>)
-  static Map<String, List> encodeMap(Map<DateTime, List<Task>> map) {
+  static Map<String, List> encodeMap(Map<DateTime, List<Item>> map) {
     Map<String, List> newMap = {}; // map用意
     // mapの各組み合わせに一回ずつ処理を実行
     map.forEach((key, value) {
@@ -40,23 +40,23 @@ class DataStore {
     return newMap;
   }
 
-  static Map<DateTime, List<Task>> decodeMap(Map<String, List> map) {
-    Map<DateTime, List<Task>> newMap = {}; // map用意
+  static Map<DateTime, List<Item>> decodeMap(Map<String, List> map) {
+    Map<DateTime, List<Item>> newMap = {}; // map用意
     // mapの各組み合わせに一回ずつ処理を実行
     map.forEach((key, value) {
       // mapのstringをDateTimeに変換
       newMap[DateTime.parse(key)] =
           // keyに対応するList内の要素をDecode
-          map[key]!.map((a) => Task.fromJson(json.decode(a))).toList();
+          map[key]!.map((a) => Item.fromJson(json.decode(a))).toList();
     });
     return newMap;
   }
 
   // 日付をKeyとしてMapへリストを追加
-  void add(Task item) {
+  void add(Item item) {
     var now = DateTime.now();
     var date = DateTime(now.year, now.month, now.day);
-    List<Task> list = [item];
+    List<Item> list = [item];
     if (eventsList[date] == null) {
       //eventsList[date].add(item);
       eventsList[date] = list;
