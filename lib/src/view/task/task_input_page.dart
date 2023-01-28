@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:management/src/store/task_list_store.dart';
-import 'package:management/src/model/task.dart';
+import 'package:management/src/model/list_model.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 /// Todo入力画面のクラス
@@ -93,7 +93,7 @@ class _TaskInputPageState extends State<TaskInputPage> {
     return Scaffold(
       appBar: AppBar(
         // アプリケーションバーに表示するタイトル
-        title: Text(_isCreateTask ? 'Todo追加' : 'Todo更新'),
+        title: Text(_isCreateTask ? 'Task追加' : 'Task更新'),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -166,17 +166,18 @@ class _TaskInputPageState extends State<TaskInputPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  if (_isCreateTask) {
-                    // Taskを追加する
-
-                    _store.add(_name, _point, _color);
-                  } else {
-                    // Taskを更新する
-                    _store.update(widget.task!, _name, _point, _color);
-                  }
                   if (_name != "") {
-                    // Taskリスト画面に戻る
-                    Navigator.of(context).pop();
+                    if (_isCreateTask) {
+                      // Taskを追加する
+                      _store.add(_name, _point, _color);
+                    } else {
+                      // Taskを更新する
+                      _store.update(widget.task!, _name, _point, _color);
+                    }
+                    if (_name != "") {
+                      // Taskリスト画面に戻る
+                      Navigator.of(context).pop();
+                    }
                   }
                 },
                 child: Text(

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:management/main.dart';
-import 'package:management/src/model/task.dart';
+import 'package:management/src/model/list_model.dart';
+import 'package:management/src/store/data_store.dart';
 import 'package:management/src/store/task_list_store.dart';
-import 'package:management/src/view/task_input_page.dart';
+import 'package:management/src/view/task/task_input_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:management/src/store/total_point_store.dart';
+import 'package:management/src/store/point_store.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class TaskPage extends StatefulWidget {
@@ -24,6 +25,7 @@ class _TaskPageState extends State<TaskPage> {
   // ストアクラス
   final TaskListStore _taskStore = TaskListStore();
   final TotalPointStore _pointStore = TotalPointStore();
+  final DataStore _dataStore = DataStore();
 
   // Taskリスト入力画面に遷移する
   void _pushTaskInputPage([Task? task]) async {
@@ -52,6 +54,7 @@ class _TaskPageState extends State<TaskPage> {
     );
   }
 
+  // ボトムシートを表示
   void _showModalBottomSheet(Task item) {
     showModalBottomSheet(
         context: context,
@@ -107,7 +110,7 @@ class _TaskPageState extends State<TaskPage> {
                     onPressed: () {
                       print(item.point);
                       _pointStore.plus(item.point);
-                      _pointStore.save();
+                      _dataStore.add(item);
                       Fluttertoast.showToast(
                         msg: 'タスク完了\n${item.point}ポイント獲得',
                       );
@@ -162,21 +165,6 @@ class _TaskPageState extends State<TaskPage> {
           var item = _taskStore.findByIndex(index);
           return Slidable(
             key: Key(item.id.toString()),
-            startActionPane: ActionPane(
-              motion: const ScrollMotion(),
-              extentRatio: 0.25,
-              children: [
-                SlidableAction(
-                  onPressed: (context) {
-                    // Todo編集画面に遷移する
-                    _pushTaskInputPage(item);
-                  },
-                  backgroundColor: Colors.yellow,
-                  icon: Icons.edit,
-                  label: '編集',
-                ),
-              ],
-            ),
             child: Card(
               // 並び替え用のKey設定
               key: Key(item.id.toString()),
@@ -244,6 +232,7 @@ class _TaskPageState extends State<TaskPage> {
                     ),
                     //Icon(Icons.more_vert),
                   ]),
+                  // ボトムシートを表示
                   onTap: () {
                     _showModalBottomSheet(item);
                   },

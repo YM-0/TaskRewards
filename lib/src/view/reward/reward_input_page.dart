@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:management/src/model/task.dart';
+import 'package:management/src/model/list_model.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:management/src/store/reward_list_store.dart';
 
@@ -93,7 +93,7 @@ class _RewardInputPageState extends State<RewardInputPage> {
     return Scaffold(
       appBar: AppBar(
         // アプリケーションバーに表示するタイトル
-        title: Text(_isCreateTask ? 'Todo追加' : 'Todo更新'),
+        title: Text(_isCreateTask ? 'リワード追加' : 'リワード更新'),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -121,7 +121,7 @@ class _RewardInputPageState extends State<RewardInputPage> {
             // タスク名入力用TextField
             TextField(
               decoration: const InputDecoration(
-                hintText: "報酬名を入力してください",
+                hintText: "リワード名を入力してください",
                 labelText: "Reward",
               ),
               maxLength: 20,
@@ -178,7 +178,7 @@ class _RewardInputPageState extends State<RewardInputPage> {
                   }
                 },
                 child: Text(
-                  _isCreateTask ? "報酬追加" : "報酬更新",
+                  _isCreateTask ? "リワード追加" : "リワード更新",
                   style: const TextStyle(color: Colors.white),
                 ),
               ),

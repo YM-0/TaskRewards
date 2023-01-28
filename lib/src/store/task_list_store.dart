@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:management/src/model/task.dart';
+import 'package:management/src/model/list_model.dart';
 import 'dart:convert';
 
 // TaskStoreクラス
@@ -35,8 +35,9 @@ class TaskListStore {
 
   // Taskを追加する
   void add(String name, int point, int color) {
+    var model = "Task";
     var id = count() == 0 ? 1 : list.last.id + 1;
-    var task = Task(id, name, point, color);
+    var task = Task(id, name, point, color, model);
     list.add(task);
     save();
   }
@@ -67,6 +68,7 @@ class TaskListStore {
     // SharedPreferencesはプリミティブ型とString型リストしか扱えないため、以下の変換を行っている
     // TodoList形式 → Map形式 → JSON形式 → StrigList形式
     var saveTargetList = list.map((a) => json.encode(a.toJson())).toList();
+    print(saveTargetList);
     prefs.setStringList(_saveKey, saveTargetList);
   }
 
