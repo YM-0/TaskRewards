@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:management/main.dart';
 import 'package:management/src/model/list_model.dart';
+import 'package:management/src/store/data_store.dart';
 import 'package:management/src/store/task_list_store.dart';
 import 'package:management/src/view/task/task_input_page.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,6 +25,7 @@ class _TaskPageState extends State<TaskPage> {
   // ストアクラス
   final TaskListStore _taskStore = TaskListStore();
   final TotalPointStore _pointStore = TotalPointStore();
+  final DataStore _dataStore = DataStore();
 
   // Taskリスト入力画面に遷移する
   void _pushTaskInputPage([Task? task]) async {
@@ -108,6 +110,7 @@ class _TaskPageState extends State<TaskPage> {
                     onPressed: () {
                       print(item.point);
                       _pointStore.plus(item.point);
+                      _dataStore.add(item);
                       Fluttertoast.showToast(
                         msg: 'タスク完了\n${item.point}ポイント獲得',
                       );

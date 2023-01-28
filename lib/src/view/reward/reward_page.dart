@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:management/main.dart';
+import 'package:management/src/store/data_store.dart';
 import 'package:management/src/model/list_model.dart';
 import 'package:management/src/store/reward_list_store.dart';
 import 'package:management/src/view/reward/reward_input_page.dart';
@@ -24,8 +25,8 @@ class RewardPage extends StatefulWidget {
 class _RewardPageState extends State<RewardPage> {
   // ストアクラス
   final RewardeListStore _rewardStore = RewardeListStore();
-  final TaskListStore _taskStore = TaskListStore();
   final TotalPointStore _pointStore = TotalPointStore();
+  final DataStore _dataStore = DataStore();
 
   // Taskリスト入力画面に遷移する
   void _pushRewardInputPage([Task? reward]) async {
@@ -110,6 +111,7 @@ class _RewardPageState extends State<RewardPage> {
                       print(item.point);
                       if ((_pointStore.totalPoint - item.point) >= 0) {
                         _pointStore.minus(item.point);
+                        _dataStore.add(item);
                         Fluttertoast.showToast(
                           msg: '報酬獲得\n${item.point}ポイント消費',
                         );

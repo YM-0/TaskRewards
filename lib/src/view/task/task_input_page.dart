@@ -93,7 +93,7 @@ class _TaskInputPageState extends State<TaskInputPage> {
     return Scaffold(
       appBar: AppBar(
         // アプリケーションバーに表示するタイトル
-        title: Text(_isCreateTask ? 'Todo追加' : 'Todo更新'),
+        title: Text(_isCreateTask ? 'Task追加' : 'Task更新'),
       ),
       body: Container(
         decoration: const BoxDecoration(

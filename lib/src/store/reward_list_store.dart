@@ -35,8 +35,9 @@ class RewardeListStore {
 
   // Taskを追加する
   void add(String name, int point, int color) {
+    var model = "Reward";
     var id = count() == 0 ? 1 : list.last.id + 1;
-    var task = Task(id, name, point, color);
+    var task = Task(id, name, point, color, model);
     list.add(task);
     save();
   }
