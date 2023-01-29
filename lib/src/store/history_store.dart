@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:collection';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:management/src/model/list_model.dart';
 import 'dart:convert';
@@ -9,6 +10,9 @@ class DataStore {
 
   // イベントマップリスト
   Map<DateTime, List<Item>> eventsList = {};
+
+  int taskMonth = 0;
+  int rewardMonth = 0;
 
   // ストアのインスタンス
   static final DataStore _instance = DataStore._internal();
@@ -25,6 +29,26 @@ class DataStore {
   // DateTime型から8桁のint型へ変換
   int getHashCode(DateTime key) {
     return key.day * 1000000 + key.month + 10000 + key.year;
+  }
+
+  // 今週のタスク、リワード数をカウントする
+  void count() {
+    taskMonth = 0;
+    rewardMonth = 0;
+    var month = DateTime.now().month;
+    load();
+    eventsList.forEach((key, value) {
+      var eventMonth = key.month;
+      if (eventMonth == month) {
+        eventsList[key]!.forEach((element) {
+          if (element.model == "Task") {
+            taskMonth += 1;
+          } else if (element.model == "Reward") {
+            rewardMonth += 1;
+          }
+        });
+      }
+    });
   }
 
   // Mapの要素をStringへ変換 (Map<DateTime, List> → Map<String, StringList>)
