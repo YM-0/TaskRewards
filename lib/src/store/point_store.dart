@@ -42,5 +42,6 @@ class TotalPointStore {
     var prefs = await SharedPreferences.getInstance();
     var loadTargetInt = prefs.getInt(_saveKey) ?? 0;
     totalPoint = loadTargetInt;
+    print("ポイントロード");
   }
 }

@@ -11,8 +11,11 @@ class DataStore {
   // イベントマップリスト
   Map<DateTime, List<Item>> eventsList = {};
 
-  int taskMonth = 0;
-  int rewardMonth = 0;
+  // カウント用
+  int totalTask = 0;
+  int totalReward = 0;
+  int monthTask = 0;
+  int monthReward = 0;
 
   // ストアのインスタンス
   static final DataStore _instance = DataStore._internal();
@@ -31,20 +34,33 @@ class DataStore {
     return key.day * 1000000 + key.month + 10000 + key.year;
   }
 
+  void countTotal() {
+    totalTask = 0;
+    totalReward = 0;
+    eventsList.forEach((key, value) {
+      eventsList[key]!.forEach((element) {
+        if (element.model == "Task") {
+          totalTask += 1;
+        } else if (element == "Reward") {
+          totalReward += 1;
+        }
+      });
+    });
+  }
+
   // 今週のタスク、リワード数をカウントする
-  void count() {
-    taskMonth = 0;
-    rewardMonth = 0;
+  void countMonth() {
+    monthTask = 0;
+    monthReward = 0;
     var month = DateTime.now().month;
-    load();
     eventsList.forEach((key, value) {
       var eventMonth = key.month;
       if (eventMonth == month) {
         eventsList[key]!.forEach((element) {
           if (element.model == "Task") {
-            taskMonth += 1;
+            monthTask += 1;
           } else if (element.model == "Reward") {
-            rewardMonth += 1;
+            monthReward += 1;
           }
         });
       }
@@ -119,6 +135,6 @@ class DataStore {
       eventsList = decodeMap(map);
     }
 
-    print(eventsList);
+    print("イベントロード");
   }
 }
