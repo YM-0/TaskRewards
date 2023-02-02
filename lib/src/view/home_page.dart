@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:management/main.dart';
+import 'package:management/src/store/history_store.dart';
 import 'package:management/src/store/point_store.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,13 +13,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // ポイントストアクラス
   final TotalPointStore _pointStore = TotalPointStore();
+  final DataStore _dataStore = DataStore();
   @override
 
   // 初期処理を行う
   void initState() {
     super.initState();
-
+    _dataStore.load();
     Future(() async {
+      _dataStore.countMonth();
+      _dataStore.countTotal();
       _pointStore.load();
       setState(() {});
     });
@@ -30,11 +34,169 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("HomePage"),
       ),
-      body: Container(
-        alignment: Alignment(0.0, 0.0),
-        child: Text(
-          // 現在のポイント表示
-          _pointStore.totalPoint.toString(),
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 200,
+              width: double.infinity,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                color: Colors.white10,
+                child: Center(
+                  child: Column(children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(10, 10, 230, 35),
+                      child: Text(
+                        "保有ポイント",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Text(
+                      _pointStore.totalPoint.toString() + " P",
+                      style:
+                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                    ),
+                  ]),
+                ),
+              ),
+            ),
+            Column(
+              children: [
+                Text(
+                  "今月",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                          height: 120,
+                          width: 180,
+                          child: Card(
+                            color: Colors.white10,
+                            child: Center(
+                                child: Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(0, 10, 100, 10),
+                                  child: Text(
+                                    "Task",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Text(
+                                  _dataStore.monthTask.toString(),
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            )),
+                          )),
+                      SizedBox(
+                          height: 120,
+                          width: 180,
+                          child: Card(
+                            color: Colors.white10,
+                            child: Center(
+                                child: Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(0, 10, 75, 10),
+                                  child: Text(
+                                    "Reward",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Text(
+                                  _dataStore.monthReward.toString(),
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            )),
+                          )),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              "合計",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                      height: 120,
+                      width: 180,
+                      child: Card(
+                        color: Colors.white10,
+                        child: Center(
+                            child: Column(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.fromLTRB(0, 10, 100, 10),
+                              child: Text(
+                                "Task",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Text(
+                              _dataStore.totalTask.toString(),
+                              style: TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )),
+                      )),
+                  SizedBox(
+                      height: 120,
+                      width: 180,
+                      child: Card(
+                        color: Colors.white10,
+                        child: Center(
+                            child: Column(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.fromLTRB(0, 10, 75, 10),
+                              child: Text(
+                                "Reward",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Text(
+                              _dataStore.monthReward.toString(),
+                              style: TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )),
+                      )),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

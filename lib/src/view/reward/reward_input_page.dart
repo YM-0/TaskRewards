@@ -96,11 +96,6 @@ class _RewardInputPageState extends State<RewardInputPage> {
         title: Text(_isCreateTask ? 'リワード追加' : 'リワード更新'),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-        ),
         padding: EdgeInsets.all(40),
         child: Column(
           children: <Widget>[

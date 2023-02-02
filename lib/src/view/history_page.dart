@@ -39,7 +39,7 @@ class _DataPageState extends State<DataPage> {
   }
 
   // カレンダーのイベント数を数字で表示
-  Widget _buildEventsMarker(DateTime date, List events) {
+  Widget _buildEventsMarker(DateTime day, List events) {
     return Positioned(
       right: 5,
       bottom: 5,
@@ -69,7 +69,7 @@ class _DataPageState extends State<DataPage> {
     final _events = LinkedHashMap<DateTime, List>(
       equals: isSameDay,
       hashCode: _dataStore.getHashCode,
-    )..addAll(_dataStore.eventsList); // テスト
+    )..addAll(_dataStore.eventsList);
 
     List _getEventForDay(DateTime day) {
       return _events[day] ?? [];
@@ -77,7 +77,6 @@ class _DataPageState extends State<DataPage> {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black54,
           title: Text("DataPage"),
         ),
         body: SingleChildScrollView(

@@ -96,11 +96,6 @@ class _TaskInputPageState extends State<TaskInputPage> {
         title: Text(_isCreateTask ? 'Task追加' : 'Task更新'),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-        ),
         padding: EdgeInsets.all(40),
         child: Column(
           children: <Widget>[
