@@ -1,18 +1,15 @@
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:management/src/model/list_model.dart';
-import 'dart:convert';
+import 'package:management/src/model/item_model.dart';
+import 'package:management/src/model/database_helper.dart';
 
 // TaskStoreクラス
 // Taskを取得/追加/更新/削除/保存/読み込み
 class TaskListStore {
-  // 保存時のキー
-  final String _saveKey = "Task";
-
   // Taskリスト
   List<Item> list = [];
 
-  // ストアのインスタンス
+  // インスタンス
   static final TaskListStore _instance = TaskListStore._internal();
+  final dbhelper = DatabaseHelper.instance;
 
   // プライベートコンストラクタ
   TaskListStore._internal();
@@ -23,26 +20,17 @@ class TaskListStore {
     return _instance;
   }
 
-  // Taskの件数を取得する
+  // Taskの件数を取得
   int count() {
     return list.length;
   }
 
-  // 指定したインデックスのTaskを取得する
+  // 指定したインデックスのTaskを取得
   Item findByIndex(int index) {
     return list[index];
   }
 
-  // Taskを追加する
-  void add(String name, int point, int color) {
-    var model = "Task";
-    var id = count() == 0 ? 1 : list.last.id + 1;
-    var task = Item(id, name, point, color, model);
-    list.add(task);
-    save();
-  }
-
-  // Taskを更新する
+  // Taskを更新
   void update(Item task, [String? name, int? point, int? color]) {
     if (name != null) {
       task.name = name;
@@ -53,31 +41,23 @@ class TaskListStore {
     if (color != null) {
       task.color = color;
     }
-    save();
+    dbhelper.updateTask(task);
   }
 
-  // Taskを削除する
-  void delete(Item task) {
-    list.remove(task);
-    save();
+  // Taskを削除
+  void delete(Item task) async {
+    await dbhelper.deleteTask(task.id);
   }
 
-  // Taskを保存する
-  void save() async {
-    var prefs = await SharedPreferences.getInstance();
-    // SharedPreferencesはプリミティブ型とString型リストしか扱えないため、以下の変換を行っている
-    // TodoList形式 → Map形式 → JSON形式 → StrigList形式
-    var saveTargetList = list.map((a) => json.encode(a.toJson())).toList();
-    print(saveTargetList);
-    prefs.setStringList(_saveKey, saveTargetList);
+  // Taskを登録
+  void insert(String name, int point, int color) async {
+    var id = count() == 0 ? 1 : list.last.id + 1;
+    var task = Item(id, name, point, color);
+    await dbhelper.insertTask(task);
   }
 
-  //Taskを読み込みする
-  void load() async {
-    var prefs = await SharedPreferences.getInstance();
-    // SharedPreferencesはプリミティブ型とString型リストしか扱えないため、以下の変換を行っている
-    // StringList形式 → JSON形式 → MAP形式 → TodoList形式
-    var loadTargetList = prefs.getStringList(_saveKey) ?? [];
-    list = loadTargetList.map((a) => Item.fromJson(json.decode(a))).toList();
+  // Taskを取得
+  void get() async {
+    list = await dbhelper.getTask();
   }
 }

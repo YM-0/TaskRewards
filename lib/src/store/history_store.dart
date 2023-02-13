@@ -1,15 +1,16 @@
-import 'dart:collection';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:management/src/model/list_model.dart';
+import 'package:management/src/model/item_model.dart';
+import 'package:management/src/model/history_model.dart';
+import 'package:management/src/model/database_helper.dart';
+
 import 'dart:convert';
 
-class DataStore {
+class HistoryStore {
   // 保存時のキー
   final String _saveKey = "events";
 
   // イベントマップリスト
-  Map<DateTime, List<Item>> eventsList = {};
+  Map<DateTime, List<History>> eventsList = {};
+  List<History> list = [];
 
   // カウント用
   int totalTask = 0;
@@ -17,15 +18,16 @@ class DataStore {
   int monthTask = 0;
   int monthReward = 0;
 
-  // ストアのインスタンス
-  static final DataStore _instance = DataStore._internal();
+  // インスタンス
+  static final HistoryStore _instance = HistoryStore._internal();
+  final dbhelper = DatabaseHelper.instance;
 
   // プライベートコンストラクタ
-  DataStore._internal();
+  HistoryStore._internal();
 
   // ファクトリーコンストラクタ
   // (インスタンスを生成しないコンストラクタのため、自分でインスタンスを生成する)
-  factory DataStore() {
+  factory HistoryStore() {
     return _instance;
   }
 
@@ -34,6 +36,7 @@ class DataStore {
     return key.day * 1000000 + key.month + 10000 + key.year;
   }
 
+  // 総合のタスク、リワード数をカウントする
   void countTotal() {
     totalTask = 0;
     totalReward = 0;
@@ -67,74 +70,33 @@ class DataStore {
     });
   }
 
-  // Mapの要素をStringへ変換 (Map<DateTime, List> → Map<String, StringList>)
-  static Map<String, List> encodeMap(Map<DateTime, List<Item>> map) {
-    Map<String, List> newMap = {}; // map用意
-    // mapの各組み合わせに一回ずつ処理を実行
-    map.forEach((key, value) {
-      // mapのValueをString型にしてnewMapに格納
-      newMap[key.toString()] =
-          // keyに対応するList内の要素をstringに変換
-          map[key]!.map((a) => json.encode(a.toJson())).toList();
-    });
-    return newMap;
-  }
-
-  static Map<DateTime, List<Item>> decodeMap(Map<String, List> map) {
-    Map<DateTime, List<Item>> newMap = {}; // map用意
-    // mapの各組み合わせに一回ずつ処理を実行
-    map.forEach((key, value) {
-      // mapのstringをDateTimeに変換
-      newMap[DateTime.parse(key)] =
-          // keyに対応するList内の要素をDecode
-          map[key]!.map((a) => Item.fromJson(json.decode(a))).toList();
-    });
-    return newMap;
-  }
-
-  // 日付をKeyとしてMapへリストを追加
-  void add(Item item) {
+  // Historyを登録
+  void insert(Item item, String model) async {
     var now = DateTime.now();
-    var date = DateTime(now.year, now.month, now.day);
-    List<Item> list = [item];
-    if (eventsList[date] == null) {
-      //eventsList[date].add(item);
-      eventsList[date] = list;
-    } else {
-      eventsList[date]?.add(item);
-    }
-    print(eventsList);
-    save();
-    print("追加");
+    var date = DateTime(now.year, now.month, now.day).toString();
+    list = await dbhelper.getHistory();
+    var id = list.isEmpty ? 1 : list.last.id + 1;
+    var history = History(id, item.name, item.point, item.color, model, date);
+    await dbhelper.insertHistory(history);
   }
 
-  // Mapを保存する
-  void save() async {
-    var prefs = await SharedPreferences.getInstance();
-    // SharedPreferencesはプリミティブ型とString型リストしか扱えないため、以下の変換を行っている
-    // Map<DateTime, List<dynamic>> → Map<string, List<json>> → List<Map> → JsonList
-    var StringMap = encodeMap(eventsList);
-    // Map<string, List<string>>をList<String(Json)>に変換
-    List<String> saveTarget = [];
-    saveTarget.add(json.encode(StringMap));
-    prefs.setStringList(_saveKey, saveTarget);
-    print("セーブ ");
-  }
-
-  //Mapを読み込みする
-  void load() async {
-    var prefs = await SharedPreferences.getInstance();
-    // SharedPreferencesはプリミティブ型とString型リストしか扱えないため、以下の変換を行っている
-    // StringList形式 → JSON形式 → MAP形式 → TodoList形式
-    var loadTarget = prefs.getStringList(_saveKey) ?? [];
-    // String(json)をMapに変換
-    if (loadTarget.isEmpty == false) {
-      Map<String, List> map =
-          Map<String, List>.from(json.decode(loadTarget[0]));
-      // Map<string, List<string>>をMap<DateTime, List<Task>>に変換
-      eventsList = decodeMap(map);
+  //Historyを読み込みする
+  void get() async {
+    list = await dbhelper.getHistory();
+    // カレンダーにイベントとして表示するため、Map型に変換
+    Map<DateTime, List<History>> newMap = {};
+    for (var item in list) {
+      bool flag = false;
+      newMap.forEach((key, value) {
+        if (key == DateTime.parse(item.date)) {
+          newMap[key]!.add(item);
+          flag = true;
+        }
+      });
+      if (flag == false) {
+        newMap[DateTime.parse(item.date)]!.add(item);
+      }
     }
-
-    print("イベントロード");
+    eventsList = newMap;
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:management/src/model/list_model.dart';
+import 'package:management/src/model/item_model.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:management/src/store/reward_list_store.dart';
 
@@ -163,7 +163,7 @@ class _RewardInputPageState extends State<RewardInputPage> {
                   if (_name != "") {
                     if (_isCreateTask) {
                       // Taskを追加する
-                      _store.add(_name, _point, _color);
+                      _store.insert(_name, _point, _color);
                     } else {
                       // Taskを更新する
                       _store.update(widget.reward!, _name, _point, _color);
