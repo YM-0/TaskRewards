@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:management/main.dart';
 import 'package:management/src/store/history_store.dart';
 import 'package:management/src/store/point_store.dart';
 
@@ -13,16 +12,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // ポイントストアクラス
   final TotalPointStore _pointStore = TotalPointStore();
-  final DataStore _dataStore = DataStore();
+  final HistoryStore _historyStore = HistoryStore();
   @override
 
   // 初期処理を行う
   void initState() {
     super.initState();
-    _dataStore.load();
     Future(() async {
-      _dataStore.countMonth();
-      _dataStore.countTotal();
+      _historyStore.get();
+      _historyStore.countMonth();
+      _historyStore.countTotal();
       _pointStore.load();
       setState(() {});
     });
@@ -95,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 Text(
-                                  _dataStore.monthTask.toString(),
+                                  _historyStore.monthTask.toString(),
                                   style: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold),
@@ -121,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 Text(
-                                  _dataStore.monthReward.toString(),
+                                  _historyStore.monthReward.toString(),
                                   style: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold),
@@ -162,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              _dataStore.totalTask.toString(),
+                              _historyStore.totalTask.toString(),
                               style: TextStyle(
                                   fontSize: 30, fontWeight: FontWeight.bold),
                             ),
@@ -186,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              _dataStore.monthReward.toString(),
+                              _historyStore.monthReward.toString(),
                               style: TextStyle(
                                   fontSize: 30, fontWeight: FontWeight.bold),
                             ),

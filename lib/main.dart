@@ -3,6 +3,7 @@ import 'package:management/src/view/history_page.dart';
 import 'package:management/src/view/home_page.dart';
 import 'package:management/src/view/reward/reward_page.dart';
 import 'package:management/src/view/task/task_page.dart';
+import 'package:management/src/model/database_helper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,6 +33,8 @@ class Navigation extends StatefulWidget {
 class _NavigationState extends State<Navigation> {
   // ページ選択用のインデックス
   int _currentIndex = 0;
+
+  final dbhelper = DatabaseHelper.instance;
 
   // 表示するページ
   List<Widget> pages = [

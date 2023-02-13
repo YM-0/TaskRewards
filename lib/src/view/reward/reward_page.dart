@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:management/main.dart';
 import 'package:management/src/store/history_store.dart';
-import 'package:management/src/model/list_model.dart';
+import 'package:management/src/model/item_model.dart';
 import 'package:management/src/store/reward_list_store.dart';
 import 'package:management/src/view/reward/reward_input_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:management/src/store/point_store.dart';
-import 'package:management/src/store/task_list_store.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class RewardPage extends StatefulWidget {
@@ -26,7 +22,9 @@ class _RewardPageState extends State<RewardPage> {
   // ストアクラス
   final RewardeListStore _rewardStore = RewardeListStore();
   final TotalPointStore _pointStore = TotalPointStore();
-  final DataStore _dataStore = DataStore();
+  final HistoryStore _historyStore = HistoryStore();
+
+  String model = "Reward";
 
   // Taskリスト入力画面に遷移する
   void _pushRewardInputPage([Item? reward]) async {
@@ -48,7 +46,7 @@ class _RewardPageState extends State<RewardPage> {
     Future(
       () async {
         // ストアからTaskリストデータをロードし、画面を更新する
-        _rewardStore.load();
+        _rewardStore.get();
         setState(() {});
         print("ロード");
       },
@@ -111,7 +109,7 @@ class _RewardPageState extends State<RewardPage> {
                       print(item.point);
                       if ((_pointStore.totalPoint - item.point) >= 0) {
                         _pointStore.minus(item.point);
-                        _dataStore.add(item);
+                        _historyStore.insert(item, model);
                         Fluttertoast.showToast(
                           msg: '報酬獲得\n${item.point}ポイント消費',
                         );

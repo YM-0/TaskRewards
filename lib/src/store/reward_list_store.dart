@@ -1,18 +1,15 @@
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:management/src/model/list_model.dart';
-import 'dart:convert';
+import 'package:management/src/model/item_model.dart';
+import 'package:management/src/model/database_helper.dart';
 
-// TaskStoreクラス
-// Taskを取得/追加/更新/削除/保存/読み込み
+// RewardStoreクラス
+// Rewardを取得/追加/更新/削除/保存/読み込み
 class RewardeListStore {
-  // 保存時のキー
-  final String _saveKey = "Reward";
-
   // Taskリスト
   List<Item> list = [];
 
-  // ストアのインスタンス
+  // インスタンス
   static final RewardeListStore _instance = RewardeListStore._internal();
+  final dbhelper = DatabaseHelper.instance;
 
   // プライベートコンストラクタ
   RewardeListStore._internal();
@@ -23,60 +20,44 @@ class RewardeListStore {
     return _instance;
   }
 
-  // Taskの件数を取得する
+  // Rewardの件数を取得
   int count() {
     return list.length;
   }
 
-  // 指定したインデックスのTaskを取得する
+  // 指定したインデックスのRewardを取得
   Item findByIndex(int index) {
     return list[index];
   }
 
-  // Taskを追加する
-  void add(String name, int point, int color) {
-    var model = "Reward";
-    var id = count() == 0 ? 1 : list.last.id + 1;
-    var task = Item(id, name, point, color, model);
-    list.add(task);
-    save();
-  }
-
-  // Taskを更新する
-  void update(Item task, [String? name, int? point, int? color]) {
+  // Rewardを更新
+  void update(Item reward, [String? name, int? point, int? color]) {
     if (name != null) {
-      task.name = name;
+      reward.name = name;
     }
     if (point != null) {
-      task.point = point;
+      reward.point = point;
     }
     if (color != null) {
-      task.color = color;
+      reward.color = color;
     }
-    save();
+    dbhelper.updateReward(reward);
   }
 
   // Taskを削除する
-  void delete(Item task) {
-    list.remove(task);
-    save();
+  void delete(Item reward) async {
+    await dbhelper.deleteReward(reward.id);
   }
 
-  // Taskを保存する
-  void save() async {
-    var prefs = await SharedPreferences.getInstance();
-    // SharedPreferencesはプリミティブ型とString型リストしか扱えないため、以下の変換を行っている
-    // TodoList形式 → Map形式 → JSON形式 → StrigList形式
-    var saveTargetList = list.map((a) => json.encode(a.toJson())).toList();
-    prefs.setStringList(_saveKey, saveTargetList);
+  // Rewardを登録する
+  void insert(String name, int point, int color) async {
+    var id = count() == 0 ? 1 : list.last.id + 1;
+    var reward = Item(id, name, point, color);
+    await dbhelper.insertReward(reward);
   }
 
-  //Taskを読み込みする
-  void load() async {
-    var prefs = await SharedPreferences.getInstance();
-    // SharedPreferencesはプリミティブ型とString型リストしか扱えないため、以下の変換を行っている
-    // StringList形式 → JSON形式 → MAP形式 → TodoList形式
-    var loadTargetList = prefs.getStringList(_saveKey) ?? [];
-    list = loadTargetList.map((a) => Item.fromJson(json.decode(a))).toList();
+  // Rewardを取得
+  void get() async {
+    list = await dbhelper.getReward();
   }
 }

@@ -1,9 +1,6 @@
 import 'dart:collection';
-import 'dart:convert';
-import 'package:management/src/model/list_model.dart';
+import 'package:management/src/model/item_model.dart';
 import 'package:flutter/material.dart';
-import 'package:management/main.dart';
-import 'package:management/src/model/list_model.dart';
 import 'package:management/src/store/history_store.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -16,7 +13,7 @@ class DataPage extends StatefulWidget {
 
 class _DataPageState extends State<DataPage> {
   // ストアクラス
-  final DataStore _dataStore = DataStore();
+  final HistoryStore _historyStore = HistoryStore();
 
   // 日付に印をつける
   DateTime _focusedDay = DateTime.now();
@@ -32,7 +29,7 @@ class _DataPageState extends State<DataPage> {
     _selectedDay = _focusedDay;
 
     Future(() async {
-      _dataStore.load();
+      _historyStore.get();
       print("データ画面更新");
       setState(() {});
     });
@@ -68,8 +65,8 @@ class _DataPageState extends State<DataPage> {
   Widget build(BuildContext context) {
     final _events = LinkedHashMap<DateTime, List>(
       equals: isSameDay,
-      hashCode: _dataStore.getHashCode,
-    )..addAll(_dataStore.eventsList);
+      hashCode: _historyStore.getHashCode,
+    )..addAll(_historyStore.eventsList);
 
     List _getEventForDay(DateTime day) {
       return _events[day] ?? [];

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:management/src/store/task_list_store.dart';
-import 'package:management/src/model/list_model.dart';
+import 'package:management/src/model/item_model.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 /// Todo入力画面のクラス
@@ -164,7 +164,7 @@ class _TaskInputPageState extends State<TaskInputPage> {
                   if (_name != "") {
                     if (_isCreateTask) {
                       // Taskを追加する
-                      _store.add(_name, _point, _color);
+                      _store.insert(_name, _point, _color);
                     } else {
                       // Taskを更新する
                       _store.update(widget.task!, _name, _point, _color);

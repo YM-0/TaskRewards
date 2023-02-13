@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:management/main.dart';
-import 'package:management/src/model/list_model.dart';
+import 'package:management/src/model/item_model.dart';
 import 'package:management/src/store/history_store.dart';
 import 'package:management/src/store/task_list_store.dart';
 import 'package:management/src/view/task/task_input_page.dart';
@@ -25,7 +25,9 @@ class _TaskPageState extends State<TaskPage> {
   // ストアクラス
   final TaskListStore _taskStore = TaskListStore();
   final TotalPointStore _pointStore = TotalPointStore();
-  final DataStore _dataStore = DataStore();
+  final HistoryStore _historyStore = HistoryStore();
+
+  String model = "Task";
 
   // Taskリスト入力画面に遷移する
   void _pushTaskInputPage([Item? task]) async {
@@ -35,6 +37,8 @@ class _TaskPageState extends State<TaskPage> {
         return TaskInputPage(task: task);
       }),
     );
+    print("ただいま");
+    _taskStore.get();
     // 画面更新
     setState(() {});
   }
@@ -43,11 +47,11 @@ class _TaskPageState extends State<TaskPage> {
   @override
   void initState() {
     super.initState();
-
+    print("たすく初期処理");
     Future(
       () async {
         // ストアからTaskリストデータをロードし、画面を更新する
-        _taskStore.load();
+        _taskStore.get();
         setState(() {});
         print("ロード");
       },
@@ -110,7 +114,7 @@ class _TaskPageState extends State<TaskPage> {
                     onPressed: () {
                       print(item.point);
                       _pointStore.plus(item.point);
-                      _dataStore.add(item);
+                      _historyStore.insert(item, model);
                       Fluttertoast.showToast(
                         msg: 'タスク完了\n${item.point}ポイント獲得',
                       );
