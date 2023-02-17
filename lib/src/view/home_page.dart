@@ -18,8 +18,15 @@ class _HomePageState extends State<HomePage> {
   // 初期処理を行う
   void initState() {
     super.initState();
+    /*
+    _historyStore.get();
+    _historyStore.countMonth();
+    _historyStore.countTotal();
+    _pointStore.load();
+    setState(() {});
+    */
     Future(() async {
-      _historyStore.get();
+      await _historyStore.get();
       _historyStore.countMonth();
       _historyStore.countTotal();
       _pointStore.load();

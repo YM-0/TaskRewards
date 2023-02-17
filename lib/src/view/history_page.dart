@@ -29,7 +29,7 @@ class _DataPageState extends State<DataPage> {
     _selectedDay = _focusedDay;
 
     Future(() async {
-      _historyStore.get();
+      await _historyStore.get();
       print("データ画面更新");
       setState(() {});
     });

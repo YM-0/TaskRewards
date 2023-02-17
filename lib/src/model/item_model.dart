@@ -3,8 +3,9 @@ class Item {
   late String name;
   late int point;
   late int color;
+  late int sort;
 
-  Item(this.id, this.name, this.point, this.color);
+  Item(this.id, this.name, this.point, this.color, this.sort);
 
   // ItemモデルをMapに変換する（保存時に使用）
   Map<String, dynamic> toMap() {
@@ -13,6 +14,7 @@ class Item {
       "name": name,
       "point": point,
       "color": color,
+      "sort": sort,
     };
   }
 
@@ -22,5 +24,6 @@ class Item {
     name = json["name"];
     point = json["point"];
     color = json["color"];
+    sort = json["sort"];
   }
 }

@@ -81,19 +81,22 @@ class HistoryStore {
   }
 
   //Historyを読み込みする
-  void get() async {
+  Future<void> get() async {
     list = await dbhelper.getHistory();
     // カレンダーにイベントとして表示するため、Map型に変換
     Map<DateTime, List<History>> newMap = {};
     for (var item in list) {
       bool flag = false;
       newMap.forEach((key, value) {
+        // キーが存在している場合、そこにitemを入れる
         if (key == DateTime.parse(item.date)) {
           newMap[key]!.add(item);
           flag = true;
         }
       });
+      // キーが存在していない場合、itemのdateをキーとする
       if (flag == false) {
+        newMap[DateTime.parse(item.date)] = [];
         newMap[DateTime.parse(item.date)]!.add(item);
       }
     }

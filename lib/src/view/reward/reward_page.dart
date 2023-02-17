@@ -35,6 +35,7 @@ class _RewardPageState extends State<RewardPage> {
       }),
     );
     // 画面更新
+    await _rewardStore.get();
     setState(() {});
   }
 
@@ -46,7 +47,7 @@ class _RewardPageState extends State<RewardPage> {
     Future(
       () async {
         // ストアからTaskリストデータをロードし、画面を更新する
-        _rewardStore.get();
+        await _rewardStore.get();
         setState(() {});
         print("ロード");
       },
@@ -161,11 +162,12 @@ class _RewardPageState extends State<RewardPage> {
             final Item item = _rewardStore.list.removeAt(oldIndex);
             _rewardStore.list.insert(newIndex, item);
           });
+          _rewardStore.saveSort();
         },
-        // Taskの件数をリストの件数とする
+        // Rewardの件数をリストの件数とする
         itemCount: _rewardStore.count(),
         itemBuilder: (context, index) {
-          // インデックスに対応するTaskを取得する
+          // インデックスに対応するRewardを取得する
           var item = _rewardStore.findByIndex(index);
           return Card(
             // 並び替え用のKey設定
@@ -180,7 +182,6 @@ class _RewardPageState extends State<RewardPage> {
             child: ListTile(
               // ID
               //leading: Text(item.id.toString()),
-
               leading: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,

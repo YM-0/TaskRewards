@@ -20,8 +20,9 @@ class DatabaseHelper {
   static final columnName = "name"; // Name
   static final columnPoint = "point"; // Point
   static final columnColor = "color"; // Color
+  static final columnSort = "sort"; // Order
   static final columnModel = "model"; // Model
-  static final columnDate = "Date"; // Date
+  static final columnDate = "date"; // Date
 
   // クラス定義
   DatabaseHelper._privateConstructor(); // 生成されたインスタンスを返す
@@ -58,7 +59,8 @@ class DatabaseHelper {
         $columnId INTEGER PRIMARY KEY,
         $columnName TEXT NOT NULL,
         $columnPoint INTEGER,
-        $columnColor INTEGER NOT NULL
+        $columnColor INTEGER NOT NULL,
+        $columnSort INTEGER NOT NULL
       )
       ''');
     await db.execute('''
@@ -66,7 +68,8 @@ class DatabaseHelper {
         $columnId INTEGER PRIMARY KEY,
         $columnName TEXT NOT NULL,
         $columnPoint INTEGER,
-        $columnColor INTEGER NOT NULL
+        $columnColor INTEGER NOT NULL,
+        $columnSort INTEGER NOT NULL 
       )
       ''');
     await db.execute('''
@@ -91,13 +94,13 @@ class DatabaseHelper {
   // Rewardテーブル
   Future insertReward(Item reward) async {
     Database? db = await instance.database;
-    db!.insert(taskTable, reward.toMap());
+    db!.insert(rewardTable, reward.toMap());
   }
 
   // Historyテーブル
   Future insertHistory(History history) async {
     Database? db = await instance.database;
-    db!.insert(taskTable, history.toMap());
+    db!.insert(historyTable, history.toMap());
   }
 
   // データ取得

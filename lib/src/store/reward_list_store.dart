@@ -31,7 +31,8 @@ class RewardeListStore {
   }
 
   // Rewardを更新
-  void update(Item reward, [String? name, int? point, int? color]) {
+  Future<void> update(Item reward,
+      [String? name, int? point, int? color]) async {
     if (name != null) {
       reward.name = name;
     }
@@ -41,23 +42,34 @@ class RewardeListStore {
     if (color != null) {
       reward.color = color;
     }
-    dbhelper.updateReward(reward);
+    await dbhelper.updateReward(reward);
   }
 
   // Taskを削除する
-  void delete(Item reward) async {
+  Future<void> delete(Item reward) async {
     await dbhelper.deleteReward(reward.id);
   }
 
   // Rewardを登録する
-  void insert(String name, int point, int color) async {
+  Future<void> insert(String name, int point, int color) async {
     var id = count() == 0 ? 1 : list.last.id + 1;
-    var reward = Item(id, name, point, color);
+    var sort = count() == 0 ? 0 : list.last.sort;
+    var reward = Item(id, name, point, color, sort);
     await dbhelper.insertReward(reward);
   }
 
   // Rewardを取得
-  void get() async {
+  Future<void> get() async {
     list = await dbhelper.getReward();
+    // 保存済みの順番でソート
+    list.sort((a, b) => a.sort.compareTo(b.sort));
+  }
+
+  // 並び順を保存
+  Future<void> saveSort() async {
+    list.asMap().forEach((index, item) {
+      item.sort = index;
+      dbhelper.updateReward(item);
+    });
   }
 }
