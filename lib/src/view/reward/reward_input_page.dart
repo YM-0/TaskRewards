@@ -65,7 +65,7 @@ class _RewardInputPageState extends State<RewardInputPage> {
   void _showPicker(BuildContext context) {
     showDialog(
       builder: (context) => AlertDialog(
-        title: const Text("Color選択"),
+        title: const Text("色選択"),
         content: SingleChildScrollView(
           child: BlockPicker(
             pickerColor: pickerColor,
@@ -93,106 +93,110 @@ class _RewardInputPageState extends State<RewardInputPage> {
     return Scaffold(
       appBar: AppBar(
         // アプリケーションバーに表示するタイトル
-        title: Text(_isCreateTask ? 'リワード追加' : 'リワード更新'),
+        title: Text(_isCreateTask ? 'REWARD追加' : 'REWARD更新'),
       ),
-      body: Container(
-        padding: EdgeInsets.all(40),
-        child: Column(
-          children: <Widget>[
-            // 色選択用Container
-            InkWell(
-              onTap: () {
-                _showPicker(context);
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: selectedColor,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(40),
+          child: Column(
+            children: <Widget>[
+              // 色選択用Container
+              InkWell(
+                onTap: () {
+                  _showPicker(context);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(_color),
+                  ),
+                  height: 50,
+                  width: 50,
                 ),
-                height: 50,
-                width: 50,
               ),
-            ),
-            // タスク名入力用TextField
-            TextField(
-              decoration: const InputDecoration(
-                hintText: "リワード名を入力してください",
-                labelText: "Reward",
+              // タスク名入力用TextField
+              TextField(
+                decoration: const InputDecoration(
+                  hintText: "報酬名を入力してください",
+                  labelText: "Reward",
+                ),
+                maxLength: 20,
+                maxLengthEnforcement:
+                    MaxLengthEnforcement.truncateAfterCompositionEnds,
+                // 入力されたテキストを変数に格納
+                controller: TextEditingController(text: _name),
+                onChanged: (String value) {
+                  _name = value;
+                  //setState(() {});
+                },
               ),
-              maxLength: 20,
-              maxLengthEnforcement:
-                  MaxLengthEnforcement.truncateAfterCompositionEnds,
-              // 入力されたテキストを変数に格納
-              controller: TextEditingController(text: _name),
-              onChanged: (String value) {
-                _name = value;
-                //setState(() {});
-              },
-            ),
-            // ポイント設定用TextField
-            TextField(
-              decoration: const InputDecoration(
-                hintText: "ポイントを設定してください",
-                labelText: "Point",
-              ),
-              maxLength: 5,
-              maxLengthEnforcement:
-                  MaxLengthEnforcement.truncateAfterCompositionEnds,
-              // 数字しか入力できないようにする
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              // 入力されたテキストを変数に格納
-              onChanged: (String value) {
-                if (value == "") {
-                  _point = 0;
-                } else {
-                  _point = int.parse(value);
-                }
-                //setState(() {});
-              },
-            ),
-
-            const SizedBox(height: 8),
-            // リスト追加ボタン
-            Container(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_name != "") {
-                    if (_isCreateTask) {
-                      // Taskを追加する
-                      _store.insert(_name, _point, _color);
-                    } else {
-                      // Taskを更新する
-                      _store.update(widget.reward!, _name, _point, _color);
-                    }
-                    // Taskリスト画面に戻る
-                    Navigator.of(context).pop();
+              // ポイント設定用TextField
+              TextField(
+                decoration: const InputDecoration(
+                  hintText: "ポイントを設定してください",
+                  labelText: "Point",
+                ),
+                maxLength: 5,
+                maxLengthEnforcement:
+                    MaxLengthEnforcement.truncateAfterCompositionEnds,
+                // 数字しか入力できないようにする
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                controller: TextEditingController(text: _point.toString()),
+                // 入力されたテキストを変数に格納
+                onChanged: (String value) {
+                  if (value == "") {
+                    _point = 0;
+                  } else {
+                    _point = int.parse(value);
                   }
+                  //setState(() {});
                 },
-                child: Text(
-                  _isCreateTask ? "リワード追加" : "リワード更新",
-                  style: const TextStyle(color: Colors.white),
+              ),
+
+              const SizedBox(height: 8),
+              // リスト追加ボタン
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_name != "") {
+                      if (_isCreateTask) {
+                        // Taskを追加する
+                        _store.insert(_name, _point, _color);
+                      } else {
+                        // Taskを更新する
+                        _store.update(widget.reward!, _name, _point, _color);
+                      }
+                      // Taskリスト画面に戻る
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: Text(
+                    _isCreateTask ? "リワード追加" : "リワード更新",
+                    style: const TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
-            ),
-            // キャンセルボタン
-            Container(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  "キャンセル",
-                  style: TextStyle(color: Colors.black),
+              // キャンセルボタン
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    "キャンセル",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.white),
                 ),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

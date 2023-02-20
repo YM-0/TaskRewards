@@ -4,9 +4,22 @@ import 'package:management/src/view/home_page.dart';
 import 'package:management/src/view/reward/reward_page.dart';
 import 'package:management/src/view/task/task_page.dart';
 import 'package:management/src/model/database_helper.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
+}
+
+// テーマ変更用の状態クラス
+class MyTheme extends ChangeNotifier {
+  ThemeData current = ThemeData.light();
+  bool _isDark = false;
+
+  toggle() {
+    _isDark = !_isDark;
+    current = _isDark ? ThemeData.dark() : ThemeData.light();
+    notifyListeners();
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -14,12 +27,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      home: const Navigation(),
-    );
+    return ChangeNotifierProvider(
+        create: (_) => MyTheme(),
+        child: Consumer<MyTheme>(builder: (context, theme, _) {
+          return MaterialApp(
+            title: 'Point_System_Management',
+            theme: theme.current,
+            home: const Navigation(),
+          );
+        }));
   }
 }
 

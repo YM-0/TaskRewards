@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:management/src/store/history_store.dart';
 import 'package:management/src/store/point_store.dart';
+import 'package:management/src/view/setting/setting_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,24 +14,27 @@ class _HomePageState extends State<HomePage> {
   // ポイントストアクラス
   final TotalPointStore _pointStore = TotalPointStore();
   final HistoryStore _historyStore = HistoryStore();
-  @override
 
+  void _pushSettingPage() async {
+    await Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return SettingPage();
+    }));
+    setState(() {});
+  }
+
+  @override
   // 初期処理を行う
   void initState() {
     super.initState();
-    /*
-    _historyStore.get();
-    _historyStore.countMonth();
-    _historyStore.countTotal();
-    _pointStore.load();
-    setState(() {});
-    */
+
     Future(() async {
       await _historyStore.get();
       _historyStore.countMonth();
       _historyStore.countTotal();
       _pointStore.load();
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 
@@ -38,7 +42,15 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("HomePage"),
+        centerTitle: true,
+        title: const Text("HOME"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                _pushSettingPage();
+              },
+              icon: const Icon(Icons.settings))
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -47,145 +59,79 @@ class _HomePageState extends State<HomePage> {
               height: 200,
               width: double.infinity,
               child: Card(
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10))),
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                color: Colors.white10,
+                margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                elevation: 5,
                 child: Center(
                   child: Column(children: [
                     Container(
-                      margin: EdgeInsets.fromLTRB(10, 10, 230, 35),
-                      child: Text(
+                      alignment: Alignment.topLeft,
+                      margin: EdgeInsets.fromLTRB(15, 15, 0, 0),
+                      child: const Text(
                         "保有ポイント",
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Text(
-                      _pointStore.totalPoint.toString() + " P",
-                      style:
-                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                    Container(
+                      margin: EdgeInsets.only(top: 25),
+                      child: Text(
+                        _pointStore.totalPoint.toString() + " P",
+                        style: const TextStyle(
+                            fontSize: 40, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ]),
                 ),
               ),
             ),
-            Column(
-              children: [
-                Text(
-                  "今月",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                          height: 120,
-                          width: 180,
-                          child: Card(
-                            color: Colors.white10,
-                            child: Center(
-                                child: Column(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 10, 100, 10),
-                                  child: Text(
-                                    "Task",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Text(
-                                  _historyStore.monthTask.toString(),
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            )),
-                          )),
-                      SizedBox(
-                          height: 120,
-                          width: 180,
-                          child: Card(
-                            color: Colors.white10,
-                            child: Center(
-                                child: Column(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 10, 75, 10),
-                                  child: Text(
-                                    "Reward",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Text(
-                                  _historyStore.monthReward.toString(),
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            )),
-                          )),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              "合計",
+            const Text(
+              "今月",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-              decoration: BoxDecoration(
+              margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+              decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                      height: 120,
-                      width: 180,
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       child: Card(
-                        color: Colors.white10,
+                        elevation: 5,
                         child: Center(
                             child: Column(
                           children: [
                             Container(
-                              margin: EdgeInsets.fromLTRB(0, 10, 100, 10),
-                              child: Text(
+                              margin: const EdgeInsets.fromLTRB(0, 10, 100, 10),
+                              child: const Text(
                                 "Task",
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Text(
-                              _historyStore.totalTask.toString(),
-                              style: TextStyle(
+                              _historyStore.monthTask.toString(),
+                              style: const TextStyle(
                                   fontSize: 30, fontWeight: FontWeight.bold),
                             ),
                           ],
                         )),
                       )),
                   SizedBox(
-                      height: 120,
-                      width: 180,
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      width: MediaQuery.of(context).size.width * 0.45,
                       child: Card(
-                        color: Colors.white10,
+                        elevation: 5,
                         child: Center(
                             child: Column(
                           children: [
                             Container(
-                              margin: EdgeInsets.fromLTRB(0, 10, 75, 10),
-                              child: Text(
+                              margin: const EdgeInsets.fromLTRB(0, 10, 75, 10),
+                              child: const Text(
                                 "Reward",
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
@@ -193,7 +139,69 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Text(
                               _historyStore.monthReward.toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )),
+                      )),
+                ],
+              ),
+            ),
+            const Text(
+              "合計",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      child: Card(
+                        elevation: 5,
+                        child: Center(
+                            child: Column(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(0, 10, 100, 10),
+                              child: const Text(
+                                "Task",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Text(
+                              _historyStore.totalTask.toString(),
+                              style: const TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )),
+                      )),
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      child: Card(
+                        elevation: 5,
+                        child: Center(
+                            child: Column(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(0, 10, 75, 10),
+                              child: const Text(
+                                "Reward",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Text(
+                              _historyStore.monthReward.toString(),
+                              style: const TextStyle(
                                   fontSize: 30, fontWeight: FontWeight.bold),
                             ),
                           ],

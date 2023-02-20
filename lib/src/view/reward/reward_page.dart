@@ -30,13 +30,15 @@ class _RewardPageState extends State<RewardPage> {
   void _pushRewardInputPage([Item? reward]) async {
     await Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
-        print("リワード追加画面へ遷移");
         return RewardInputPage(reward: reward);
       }),
     );
     // 画面更新
     await _rewardStore.get();
     setState(() {});
+    if (reward != null) {
+      Navigator.of(context).pop();
+    }
   }
 
   // 初期処理を行う
@@ -48,8 +50,9 @@ class _RewardPageState extends State<RewardPage> {
       () async {
         // ストアからTaskリストデータをロードし、画面を更新する
         await _rewardStore.get();
-        setState(() {});
-        print("ロード");
+        if (mounted) {
+          setState(() {});
+        }
       },
     );
   }
@@ -66,14 +69,14 @@ class _RewardPageState extends State<RewardPage> {
                   topLeft: Radius.circular(30), topRight: Radius.circular(30)),
             ),
 
-            height: 350, // Sheetの高さ
-            padding: const EdgeInsets.all(50),
+            height: MediaQuery.of(context).size.height * 0.4, // Sheetの高さ
+            padding: const EdgeInsets.fromLTRB(30, 40, 30, 0),
             child: Column(
               children: [
                 Row(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(right: 20),
+                      margin: const EdgeInsets.only(right: 20),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color(item.color),
@@ -81,30 +84,96 @@ class _RewardPageState extends State<RewardPage> {
                       height: 30,
                       width: 30,
                     ),
-                    Text(
-                      item.name,
-                      style: GoogleFonts.oswald(fontSize: 18),
+                    Flexible(
+                      child: Text(
+                        item.name,
+                        style: GoogleFonts.oswald(fontSize: 18),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+                      height: 50,
+                      width: 50,
+                      child: Card(
+                        shape: const RoundedRectangleBorder(
+                            side: BorderSide(
+                              color: Colors.grey, //色
+                              width: 0.5, //太さ
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        elevation: 5,
+                        child: InkWell(
+                          onTap: () {
+                            _pushRewardInputPage(item);
+                          },
+                          child: const Icon(
+                            Icons.edit,
+                            color: Colors.yellow,
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(0, 20, 0, 10),
+                      height: 70,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: Card(
+                        shape: const RoundedRectangleBorder(
+                            side: BorderSide(
+                              color: Colors.grey, //色
+                              width: 0.5, //太さ
+                            ),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        elevation: 5,
+                        child: Center(
+                          child: Text(
+                            item.point.toString() + " P",
+                            style: GoogleFonts.roboto(
+                                fontSize: 30, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                      height: 50,
+                      width: 50,
+                      child: Card(
+                        shape: const RoundedRectangleBorder(
+                            side: BorderSide(
+                              color: Colors.grey, //色
+                              width: 0.5, //太さ
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        elevation: 5,
+                        child: InkWell(
+                          onTap: () async {
+                            await _rewardStore.delete(item);
+                            await _rewardStore.get();
+                            setState(() {
+                              Navigator.of(context).pop();
+                            });
+                          },
+                          child: const Icon(
+                            Icons.delete_outline,
+                            color: Colors.red,
+                            size: 30,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                  height: 70,
-                  width: 200,
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 212, 240, 167),
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Center(
-                    child: Text(
-                      item.point.toString() + " P",
-                      style: GoogleFonts.roboto(
-                          fontSize: 30, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 10),
-                  width: double.infinity,
+                  margin: const EdgeInsets.only(top: 5),
+                  width: MediaQuery.of(context).size.width * 0.8,
                   child: ElevatedButton(
                     onPressed: () {
                       print(item.point);
@@ -125,7 +194,8 @@ class _RewardPageState extends State<RewardPage> {
                   ),
                 ),
                 Container(
-                  width: double.infinity,
+                  margin: const EdgeInsets.only(top: 5),
+                  width: MediaQuery.of(context).size.width * 0.8,
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop();
@@ -149,7 +219,7 @@ class _RewardPageState extends State<RewardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("TaskPage"),
+        title: const Text("REWARD"),
       ),
       // リスト一覧表示(並び替え可能にするためReorderableListView使用)
       body: ReorderableListView.builder(

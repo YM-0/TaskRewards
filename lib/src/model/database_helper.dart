@@ -87,18 +87,21 @@ class DatabaseHelper {
   // データ登録
   // Taskテーブル
   Future insertTask(Item task) async {
+    print("Task登録");
     Database? db = await instance.database;
     db!.insert(taskTable, task.toMap());
   }
 
   // Rewardテーブル
   Future insertReward(Item reward) async {
+    print("Reward登録");
     Database? db = await instance.database;
     db!.insert(rewardTable, reward.toMap());
   }
 
   // Historyテーブル
   Future insertHistory(History history) async {
+    print("History登録");
     Database? db = await instance.database;
     db!.insert(historyTable, history.toMap());
   }
@@ -106,6 +109,7 @@ class DatabaseHelper {
   // データ取得
   // Taskテーブル
   Future<List<Item>> getTask() async {
+    print("Task取得");
     Database? db = await instance.database;
     final List<Map<String, dynamic>> maps = await db!.query(taskTable);
     // Map型からItem型に変換してListに追加
@@ -114,6 +118,7 @@ class DatabaseHelper {
 
   // Rewardテーブル
   Future<List<Item>> getReward() async {
+    print("Reward取得");
     Database? db = await instance.database;
     final List<Map<String, dynamic>> maps = await db!.query(rewardTable);
     // Map型からItem型に変換してListに追加
@@ -122,6 +127,7 @@ class DatabaseHelper {
 
   // Historyテーブル
   Future<List<History>> getHistory() async {
+    print("History取得");
     Database? db = await instance.database;
     final List<Map<String, dynamic>> maps = await db!.query(historyTable);
     // Map型からItem型に変換してListに追加
@@ -131,6 +137,7 @@ class DatabaseHelper {
   // データ更新
   // Taskテーブル
   Future updateTask(Item task) async {
+    print("Task更新");
     Database? db = await instance.database;
     await db!
         .update(taskTable, task.toMap(), where: "id = ?", whereArgs: [task.id]);
@@ -138,6 +145,7 @@ class DatabaseHelper {
 
   // Rewardテーブル
   Future updateReward(Item reward) async {
+    print("Reward更新");
     Database? db = await instance.database;
     await db!.update(rewardTable, reward.toMap(),
         where: "id = ?", whereArgs: [reward.id]);
@@ -146,13 +154,22 @@ class DatabaseHelper {
   // データ削除
   // Taskテーブル
   Future deleteTask(int id) async {
+    print("Task削除");
     Database? db = await instance.database;
     await db!.delete(taskTable, where: "id = ?", whereArgs: [id]);
   }
 
   // Rewardテーブル
   Future deleteReward(int id) async {
+    print("Reward削除");
     Database? db = await instance.database;
     await db!.delete(rewardTable, where: "id = ?", whereArgs: [id]);
+  }
+
+  // テーブルリセット
+  // Historyテーブル
+  Future resetHistory() async {
+    Database? db = await instance.database;
+    await db!.delete(historyTable);
   }
 }

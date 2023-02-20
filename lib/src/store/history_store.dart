@@ -70,6 +70,16 @@ class HistoryStore {
     });
   }
 
+  // Historyをリセット
+  void resetHistory() async {
+    eventsList = {};
+    totalTask = 0;
+    totalReward = 0;
+    monthTask = 0;
+    monthReward = 0;
+    await dbhelper.resetHistory();
+  }
+
   // Historyを登録
   void insert(Item item, String model) async {
     var now = DateTime.now();

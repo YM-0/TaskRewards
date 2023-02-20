@@ -30,8 +30,9 @@ class _DataPageState extends State<DataPage> {
 
     Future(() async {
       await _historyStore.get();
-      print("データ画面更新");
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 

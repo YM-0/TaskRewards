@@ -45,7 +45,7 @@ class TaskListStore {
   }
 
   // Taskを削除
-  void delete(Item task) async {
+  Future<void> delete(Item task) async {
     await dbhelper.deleteTask(task.id);
   }
 
