@@ -1,5 +1,4 @@
 import 'dart:collection';
-import 'package:management/src/model/item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:management/src/store/history_store.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -18,10 +17,6 @@ class _DataPageState extends State<DataPage> {
   // 日付に印をつける
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  CalendarFormat _calendarFormat = CalendarFormat.month;
-
-  Map<DateTime, List> _testList = {}; // テスト
-  List<Item> list = []; // テスト
 
   @override
   void initState() {
@@ -52,7 +47,7 @@ class _DataPageState extends State<DataPage> {
         child: Center(
           child: Text(
             '${events.length}',
-            style: TextStyle().copyWith(
+            style: const TextStyle().copyWith(
               color: Colors.white,
               fontSize: 12.0,
             ),
@@ -75,7 +70,7 @@ class _DataPageState extends State<DataPage> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("DataPage"),
+          title: const Text("DataPage"),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -87,9 +82,10 @@ class _DataPageState extends State<DataPage> {
                     if (events.isNotEmpty) {
                       return _buildEventsMarker(day, events);
                     }
+                    return null;
                   },
                 ),
-                headerStyle: HeaderStyle(formatButtonVisible: false),
+                headerStyle: const HeaderStyle(formatButtonVisible: false),
                 firstDay: DateTime.utc(2023, 1, 1),
                 lastDay: DateTime.utc(2030, 12, 31),
                 focusedDay: _focusedDay,

@@ -7,22 +7,22 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class DatabaseHelper {
-  static final _databaseName = "Database.db"; // DB名
-  static final _databaseVersion = 1; // スキーマのバージョン
+  static const _databaseName = "Database.db"; // DB名
+  static const _databaseVersion = 1; // スキーマのバージョン
 
   // 各テーブル名
-  static final taskTable = "task_table"; // Taskリスト
-  static final rewardTable = "reward_table"; // Rewardリスト
-  static final historyTable = "history_table"; // Historyリスト
+  static const taskTable = "task_table"; // Taskリスト
+  static const rewardTable = "reward_table"; // Rewardリスト
+  static const historyTable = "history_table"; // Historyリスト
 
   // カラム名
-  static final columnId = "id"; // ID
-  static final columnName = "name"; // Name
-  static final columnPoint = "point"; // Point
-  static final columnColor = "color"; // Color
-  static final columnSort = "sort"; // Order
-  static final columnModel = "model"; // Model
-  static final columnDate = "date"; // Date
+  static const columnId = "id"; // ID
+  static const columnName = "name"; // Name
+  static const columnPoint = "point"; // Point
+  static const columnColor = "color"; // Color
+  static const columnSort = "sort"; // Order
+  static const columnModel = "model"; // Model
+  static const columnDate = "date"; // Date
 
   // クラス定義
   DatabaseHelper._privateConstructor(); // 生成されたインスタンスを返す
@@ -87,21 +87,18 @@ class DatabaseHelper {
   // データ登録
   // Taskテーブル
   Future insertTask(Item task) async {
-    print("Task登録");
     Database? db = await instance.database;
     db!.insert(taskTable, task.toMap());
   }
 
   // Rewardテーブル
   Future insertReward(Item reward) async {
-    print("Reward登録");
     Database? db = await instance.database;
     db!.insert(rewardTable, reward.toMap());
   }
 
   // Historyテーブル
   Future insertHistory(History history) async {
-    print("History登録");
     Database? db = await instance.database;
     db!.insert(historyTable, history.toMap());
   }
@@ -109,7 +106,6 @@ class DatabaseHelper {
   // データ取得
   // Taskテーブル
   Future<List<Item>> getTask() async {
-    print("Task取得");
     Database? db = await instance.database;
     final List<Map<String, dynamic>> maps = await db!.query(taskTable);
     // Map型からItem型に変換してListに追加
@@ -118,7 +114,6 @@ class DatabaseHelper {
 
   // Rewardテーブル
   Future<List<Item>> getReward() async {
-    print("Reward取得");
     Database? db = await instance.database;
     final List<Map<String, dynamic>> maps = await db!.query(rewardTable);
     // Map型からItem型に変換してListに追加
@@ -127,7 +122,6 @@ class DatabaseHelper {
 
   // Historyテーブル
   Future<List<History>> getHistory() async {
-    print("History取得");
     Database? db = await instance.database;
     final List<Map<String, dynamic>> maps = await db!.query(historyTable);
     // Map型からItem型に変換してListに追加
@@ -137,7 +131,6 @@ class DatabaseHelper {
   // データ更新
   // Taskテーブル
   Future updateTask(Item task) async {
-    print("Task更新");
     Database? db = await instance.database;
     await db!
         .update(taskTable, task.toMap(), where: "id = ?", whereArgs: [task.id]);
@@ -145,7 +138,6 @@ class DatabaseHelper {
 
   // Rewardテーブル
   Future updateReward(Item reward) async {
-    print("Reward更新");
     Database? db = await instance.database;
     await db!.update(rewardTable, reward.toMap(),
         where: "id = ?", whereArgs: [reward.id]);
@@ -154,14 +146,12 @@ class DatabaseHelper {
   // データ削除
   // Taskテーブル
   Future deleteTask(int id) async {
-    print("Task削除");
     Database? db = await instance.database;
     await db!.delete(taskTable, where: "id = ?", whereArgs: [id]);
   }
 
   // Rewardテーブル
   Future deleteReward(int id) async {
-    print("Reward削除");
     Database? db = await instance.database;
     await db!.delete(rewardTable, where: "id = ?", whereArgs: [id]);
   }

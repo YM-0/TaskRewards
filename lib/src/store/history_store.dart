@@ -2,12 +2,7 @@ import 'package:management/src/model/item_model.dart';
 import 'package:management/src/model/history_model.dart';
 import 'package:management/src/model/database_helper.dart';
 
-import 'dart:convert';
-
 class HistoryStore {
-  // 保存時のキー
-  final String _saveKey = "events";
-
   // イベントマップリスト
   Map<DateTime, List<History>> eventsList = {};
   List<History> list = [];
@@ -41,13 +36,14 @@ class HistoryStore {
     totalTask = 0;
     totalReward = 0;
     eventsList.forEach((key, value) {
-      eventsList[key]!.forEach((element) {
+      for (var element in eventsList[key]!) {
         if (element.model == "Task") {
           totalTask += 1;
+          // ignore: unrelated_type_equality_checks
         } else if (element == "Reward") {
           totalReward += 1;
         }
-      });
+      }
     });
   }
 
@@ -59,13 +55,13 @@ class HistoryStore {
     eventsList.forEach((key, value) {
       var eventMonth = key.month;
       if (eventMonth == month) {
-        eventsList[key]!.forEach((element) {
+        for (var element in eventsList[key]!) {
           if (element.model == "Task") {
             monthTask += 1;
           } else if (element.model == "Reward") {
             monthReward += 1;
           }
-        });
+        }
       }
     });
   }

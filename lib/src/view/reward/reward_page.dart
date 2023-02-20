@@ -60,15 +60,15 @@ class _RewardPageState extends State<RewardPage> {
   void _showModalBottomSheet(Item item) {
     showModalBottomSheet(
         context: context,
-        backgroundColor: Colors.transparent,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+        ),
         builder: (BuildContext context) {
           return Container(
             decoration: const BoxDecoration(
-              color: Colors.white,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30), topRight: Radius.circular(30)),
             ),
-
             height: MediaQuery.of(context).size.height * 0.4, // Sheetの高さ
             padding: const EdgeInsets.fromLTRB(30, 40, 30, 0),
             child: Column(
@@ -176,7 +176,6 @@ class _RewardPageState extends State<RewardPage> {
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: ElevatedButton(
                     onPressed: () {
-                      print(item.point);
                       if ((_pointStore.totalPoint - item.point) >= 0) {
                         _pointStore.minus(item.point);
                         _historyStore.insert(item, model);

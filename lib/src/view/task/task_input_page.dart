@@ -97,7 +97,7 @@ class _TaskInputPageState extends State<TaskInputPage> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(40),
+          padding: const EdgeInsets.all(40),
           child: Column(
             children: <Widget>[
               // 色選択用Container
@@ -155,7 +155,7 @@ class _TaskInputPageState extends State<TaskInputPage> {
 
               const SizedBox(height: 8),
               // リスト追加ボタン
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
@@ -180,7 +180,7 @@ class _TaskInputPageState extends State<TaskInputPage> {
                 ),
               ),
               // キャンセルボタン
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {

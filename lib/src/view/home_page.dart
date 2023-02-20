@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
 
   void _pushSettingPage() async {
     await Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return SettingPage();
+      return const SettingPage();
     }));
     setState(() {});
   }
@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                   child: Column(children: [
                     Container(
                       alignment: Alignment.topLeft,
-                      margin: EdgeInsets.fromLTRB(15, 15, 0, 0),
+                      margin: const EdgeInsets.fromLTRB(15, 15, 0, 0),
                       child: const Text(
                         "保有ポイント",
                         style: TextStyle(
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 25),
+                      margin: const EdgeInsets.only(top: 25),
                       child: Text(
                         _pointStore.totalPoint.toString() + " P",
                         style: const TextStyle(

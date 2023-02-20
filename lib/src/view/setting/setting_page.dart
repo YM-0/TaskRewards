@@ -34,14 +34,14 @@ class _SettingPageState extends State<SettingPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("確認"),
+            title: const Text("確認"),
             content: Text("$resetNameをリセットします。\nよろしいですか？"),
             actions: [
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text("Cancel")),
+                  child: const Text("Cancel")),
               TextButton(
                   onPressed: () {
                     switch (check) {
@@ -116,7 +116,7 @@ class _SettingPageState extends State<SettingPage> {
                 onPressed: (context) {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
-                    return ContactForm();
+                    return const ContactForm();
                   }));
                 },
               )

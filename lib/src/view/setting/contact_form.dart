@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ContactForm extends StatefulWidget {
+  const ContactForm({Key? key}) : super(key: key);
+
   @override
   _ContactFormState createState() => _ContactFormState();
 }
@@ -12,6 +14,7 @@ class ContactForm extends StatefulWidget {
 class _ContactFormState extends State {
   late final WebViewController _controller;
 
+  // ignore: prefer_typing_uninitialized_variables
   var connectionStatus;
 
   int position = 1;
@@ -73,11 +76,9 @@ class _ContactFormState extends State {
                         controller: _controller,
                       ),
                       // プログレスインジケーターを表示
-                      Container(
-                        child: const Center(
-                          child: CircularProgressIndicator(
-                              backgroundColor: Colors.blue),
-                        ),
+                      const Center(
+                        child: CircularProgressIndicator(
+                            backgroundColor: Colors.blue),
                       ),
                     ],
                   )
@@ -93,7 +94,7 @@ class _ContactFormState extends State {
                             ),
                             child: Container(),
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(
                               bottom: 20,
                             ),

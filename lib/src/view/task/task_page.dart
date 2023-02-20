@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:management/main.dart';
 import 'package:management/src/model/item_model.dart';
 import 'package:management/src/store/history_store.dart';
 import 'package:management/src/store/task_list_store.dart';
 import 'package:management/src/view/task/task_input_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:management/src/store/point_store.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -80,7 +77,7 @@ class _TaskPageState extends State<TaskPage> {
                 Row(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(right: 20),
+                      margin: const EdgeInsets.only(right: 20),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color(item.color),
@@ -180,7 +177,6 @@ class _TaskPageState extends State<TaskPage> {
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: ElevatedButton(
                     onPressed: () {
-                      print(item.point);
                       _pointStore.plus(item.point);
                       _historyStore.insert(item, model);
                       Fluttertoast.showToast(
