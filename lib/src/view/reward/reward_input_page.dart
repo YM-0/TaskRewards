@@ -92,7 +92,7 @@ class _RewardInputPageState extends State<RewardInputPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // アプリケーションバーに表示するタイトル
+        centerTitle: true,
         title: Text(_isCreateTask ? 'REWARD追加' : 'REWARD更新'),
       ),
       body: SingleChildScrollView(

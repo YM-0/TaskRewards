@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:management/services/admob.dart';
+import 'package:management/src/store/theme_store.dart';
 import 'package:management/src/view/history_page.dart';
 import 'package:management/src/view/home_page.dart';
 import 'package:management/src/view/reward/reward_page.dart';
 import 'package:management/src/view/task/task_page.dart';
 import 'package:management/src/model/database_helper.dart';
 import 'package:provider/provider.dart';
+import 'package:admob_flutter/admob_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-// テーマ変更用の状態クラス
-class MyTheme extends ChangeNotifier {
-  ThemeData current = ThemeData.light();
-  bool _isDark = false;
-
-  toggle() {
-    _isDark = !_isDark;
-    current = _isDark ? ThemeData.dark() : ThemeData.light();
-    notifyListeners();
-  }
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  Admob.initialize();
+  return runApp(ChangeNotifierProvider(
+    child: const MyApp(),
+    create: (context) => ThemeProvider(
+      isDarkMode: prefs.getBool("isDarkTheme") ?? false,
+    ),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -27,15 +27,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (_) => MyTheme(),
-        child: Consumer<MyTheme>(builder: (context, theme, _) {
-          return MaterialApp(
-            title: 'Point_System_Management',
-            theme: theme.current,
-            home: const Navigation(),
-          );
-        }));
+    return Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
+      return MaterialApp(
+        title: 'Point_System_Management',
+        theme: themeProvider.getTheme,
+        home: const Navigation(),
+      );
+    });
   }
 }
 
@@ -64,35 +62,48 @@ class _NavigationState extends State<Navigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(child: pages[_currentIndex]),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (index) => setState(() {
-          _currentIndex = index;
-        }),
-        // ナビゲーションの設定
-        destinations: const [
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.description),
-            icon: Icon(Icons.description_outlined),
-            label: 'Task',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.emoji_events),
-            icon: Icon(Icons.emoji_events_outlined),
-            label: 'Reward',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.calendar_month),
-            icon: Icon(Icons.calendar_month_outlined),
-            label: 'History',
-          ),
-        ],
-      ),
+      bottomNavigationBar: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AdmobBanner(
+              adUnitId: AdMobService().getBannerAdUnitId(),
+              adSize: AdmobBannerSize(
+                width: MediaQuery.of(context).size.width.toInt(),
+                height: AdMobService().getHeight(context).toInt(),
+                name: 'SMART_BANNER',
+              ),
+            ),
+            NavigationBar(
+              selectedIndex: _currentIndex,
+              onDestinationSelected: (index) => setState(() {
+                _currentIndex = index;
+              }),
+              // ナビゲーションの設定
+              destinations: const [
+                NavigationDestination(
+                  selectedIcon: Icon(Icons.home),
+                  icon: Icon(Icons.home_outlined),
+                  label: 'Home',
+                ),
+                NavigationDestination(
+                  selectedIcon: Icon(Icons.description),
+                  icon: Icon(Icons.description_outlined),
+                  label: 'Task',
+                ),
+                NavigationDestination(
+                  selectedIcon: Icon(Icons.emoji_events),
+                  icon: Icon(Icons.emoji_events_outlined),
+                  label: 'Reward',
+                ),
+                NavigationDestination(
+                  selectedIcon: Icon(Icons.calendar_month),
+                  icon: Icon(Icons.calendar_month_outlined),
+                  label: 'History',
+                ),
+              ],
+            ),
+          ]),
     );
   }
 }

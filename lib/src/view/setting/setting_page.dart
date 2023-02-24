@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:management/src/store/setting_store.dart';
+import 'package:management/src/store/theme_store.dart';
 import 'package:management/src/view/setting/contact_form.dart';
+import 'package:management/src/view/setting/privacy_policy.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:management/src/store/history_store.dart';
 import 'package:management/src/store/point_store.dart';
@@ -18,6 +21,22 @@ class _SettingPageState extends State<SettingPage> {
   // ストアクラス
   final HistoryStore _historyStore = HistoryStore();
   final TotalPointStore _pointStore = TotalPointStore();
+  final SettingStore _settingStore = SettingStore();
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future(
+      () async {
+        // ストアからTaskリストデータをロードし、画面を更新する
+        await _settingStore.load();
+        if (mounted) {
+          setState(() {});
+        }
+      },
+    );
+  }
 
   // リセット用ダイアログ
   _resetDialog(check) {
@@ -80,10 +99,14 @@ class _SettingPageState extends State<SettingPage> {
             tiles: [
               SettingsTile.switchTile(
                 title: const Text("ダークモード"),
-                leading: const Icon(Icons.settings_display),
-                initialValue: false,
+                initialValue: _settingStore.toggle,
                 onToggle: (value) {
-                  Provider.of<MyTheme>(context, listen: false).toggle();
+                  ThemeProvider themeProvider =
+                      Provider.of<ThemeProvider>(context, listen: false);
+                  setState(() {
+                    themeProvider.swapTheme();
+                    _settingStore.changeToggle();
+                  });
                 },
               )
             ],
@@ -119,7 +142,17 @@ class _SettingPageState extends State<SettingPage> {
                     return const ContactForm();
                   }));
                 },
-              )
+              ),
+              SettingsTile(
+                title: const Text("プライバシーポリシー"),
+                leading: const Icon(Icons.contact_page),
+                onPressed: (context) {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return const PrivacyPolicy();
+                  }));
+                },
+              ),
             ],
           )
         ],

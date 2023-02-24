@@ -213,6 +213,7 @@ class _TaskPageState extends State<TaskPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text("TASK"),
       ),
       // リスト一覧表示(並び替え可能にするためReorderableListView使用)

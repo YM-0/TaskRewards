@@ -70,83 +70,80 @@ class _DataPageState extends State<DataPage> {
 
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: const Text("DataPage"),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            // カレンダー表示
-            children: [
-              TableCalendar(
-                calendarBuilders: CalendarBuilders(
-                  markerBuilder: (context, day, events) {
-                    if (events.isNotEmpty) {
-                      return _buildEventsMarker(day, events);
-                    }
-                    return null;
-                  },
-                ),
-                headerStyle: const HeaderStyle(formatButtonVisible: false),
-                firstDay: DateTime.utc(2023, 1, 1),
-                lastDay: DateTime.utc(2030, 12, 31),
-                focusedDay: _focusedDay,
-                eventLoader: _getEventForDay,
-                selectedDayPredicate: ((day) {
-                  return isSameDay(_selectedDay, day);
-                }),
-                // 日付フォーカス変更
-                onDaySelected: (selectedDay, focusedDay) {
-                  if (!isSameDay(_selectedDay, selectedDay)) {
-                    setState(() {
-                      _selectedDay = selectedDay;
-                      _focusedDay = focusedDay;
-                    });
-                    _getEventForDay(selectedDay);
+        body: Column(
+          // カレンダー表示
+          children: [
+            TableCalendar(
+              calendarBuilders: CalendarBuilders(
+                markerBuilder: (context, day, events) {
+                  if (events.isNotEmpty) {
+                    return _buildEventsMarker(day, events);
                   }
-                },
-                onPageChanged: (focusedDay) {
-                  _focusedDay = focusedDay;
+                  return null;
                 },
               ),
-              SizedBox(
-                height: 245,
+              headerStyle: const HeaderStyle(formatButtonVisible: false),
+              firstDay: DateTime.utc(2023, 1, 1),
+              lastDay: DateTime.utc(2030, 12, 31),
+              focusedDay: _focusedDay,
+              eventLoader: _getEventForDay,
+              selectedDayPredicate: ((day) {
+                return isSameDay(_selectedDay, day);
+              }),
+              // 日付フォーカス変更
+              onDaySelected: (selectedDay, focusedDay) {
+                if (!isSameDay(_selectedDay, selectedDay)) {
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    _focusedDay = focusedDay;
+                  });
+                  _getEventForDay(selectedDay);
+                }
+              },
+              onPageChanged: (focusedDay) {
+                _focusedDay = focusedDay;
+              },
+            ),
+            Flexible(
                 child: ListView(
-                  shrinkWrap: true,
-                  children: _getEventForDay(_selectedDay!).map((event) {
-                    return Card(
-                      elevation: 5,
-                      child: ListTile(
-                        // ID
-                        //leading: Text(item.id.toString()),
-                        leading: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(event.color),
-                          ),
-                          width: 25,
-                        ),
-                        // 名前
-                        title: Text(
-                          event.name,
-                        ),
-                        subtitle: Text(
-                          event.model,
-                        ),
-                        // ポイント
-                        trailing: Wrap(children: [
-                          Text(
-                            event.point.toString() + " P",
-                            style: const TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                          //Icon(Icons.more_vert),
-                        ]),
+              shrinkWrap: true,
+              children: _getEventForDay(_selectedDay!).map((event) {
+                return Card(
+                  elevation: 5,
+                  child: ListTile(
+                    // ID
+                    //leading: Text(item.id.toString()),
+                    leading: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(event.color),
                       ),
-                    );
-                  }).toList(),
-                ),
-              )
-            ],
-          ),
+                      width: 25,
+                    ),
+                    // 名前
+                    title: Text(
+                      event.name,
+                    ),
+                    subtitle: Text(
+                      event.model,
+                    ),
+                    // ポイント
+                    trailing: Wrap(children: [
+                      Text(
+                        event.point.toString() + " P",
+                        style: const TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
+                      ),
+                      //Icon(Icons.more_vert),
+                    ]),
+                  ),
+                );
+              }).toList(),
+            ))
+          ],
         ));
   }
 }

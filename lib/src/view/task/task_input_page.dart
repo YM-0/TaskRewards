@@ -92,7 +92,7 @@ class _TaskInputPageState extends State<TaskInputPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // アプリケーションバーに表示するタイトル
+        centerTitle: true,
         title: Text(_isCreateTask ? 'Task追加' : 'Task更新'),
       ),
       body: SingleChildScrollView(

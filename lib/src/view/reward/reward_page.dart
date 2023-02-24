@@ -218,6 +218,7 @@ class _RewardPageState extends State<RewardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text("REWARD"),
       ),
       // リスト一覧表示(並び替え可能にするためReorderableListView使用)

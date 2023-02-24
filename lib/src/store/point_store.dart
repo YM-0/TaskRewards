@@ -36,14 +36,14 @@ class TotalPointStore {
     save();
   }
 
-  // TotalPointを保存する
+  // TotalPointを保存
   void save() async {
     var prefs = await SharedPreferences.getInstance();
     var saveTargetInt = totalPoint;
     prefs.setInt(_saveKey, saveTargetInt);
   }
 
-  // TotalPointを読み込みする
+  // TotalPointを読み込み
   void load() async {
     var prefs = await SharedPreferences.getInstance();
     var loadTargetInt = prefs.getInt(_saveKey) ?? 0;
