@@ -1,0 +1,79 @@
+{
+  "@@locale":"en",
+
+  "title": "LifeRewards",
+  "home": "Home",
+  "task": "Task",
+  "reward": "Reward",
+  "history": "History",
+
+  "homePage": "HOME",
+  "taskPage": "TASK",
+  "rewardPage": "REWARD",
+  "historyPage": "HISTORY",
+  "taskInputPage": "ADD TASK",
+  "taskUpdatePage": "UPDATE TASK",
+  "rewardInputPage": "ADD REWARD",
+  "rewardUpdatePage": "UPDATE REWARD",
+  "settingPage": "SETTING",
+  "inquiry": "INQUIRY",
+  "privacyPolicyPage": "PRIVACY POLICY",
+
+  "ok": "OK",
+  "cancel": "Cancel",
+  "point": "Point",
+  "pointText": "Point",
+  "historyText": "history", 
+  "colorSelect": "Color selection",
+  "pointHintText": "Please set the point",
+
+  "totalPoint": "TotalPoint",
+  "month": "Month",
+  "total": "Total",
+
+  "gainPoints": "Earn Points",
+  "addTask": "Add Task",
+  "updateTask": "Update Task",
+  "taskHintText": "Please enter the task",
+  "taskToast": "Complete Task! \n{itempoint} points earned",
+  "@taskToast": {
+    "placeholders": {
+      "itempoint": {}
+    }
+  },
+
+  "gainRewards": "Earn Rewards",
+  "addReward": "Add Reward",
+  "updateReward": "Update Reward",
+  "rewardHintText": "Please enter the reward",
+  "rewardToast": "Earn Rewards! \n{itempoint} points consumed",
+  "@rewardToast": {
+    "placeholders": {
+      "itempoint": {}
+    }
+  },
+  "rewardErrorToast": "Not enough points",
+
+  "displayMode": "DisplayMode",
+  "darkMode": "Dark Mode",
+  "reset": "Reset",
+  "confirm": "Confirm",
+  "pointReset": "Point reset",
+  "historyReset": "History reset",
+  "resetMessage": "Reset {resetName}. \nAre you sure?",
+  "@resetMessage": {
+    "placeholders": {
+      "resetName": {}
+    }
+  },
+  "resetToast": "Reset {resetName}",
+  "@resetMessage": {
+    "placeholders": {
+      "resetName": {}
+    }
+  },
+  "contact": "Contact",
+  "inquiry": "Inquiry",
+  "privacyPolicy": "Privacy policy",
+  "connectionError": "No internet connection found"
+}

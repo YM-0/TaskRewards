@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:management/src/store/history_store.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DataPage extends StatefulWidget {
   const DataPage({Key? key}) : super(key: key);
@@ -71,7 +72,7 @@ class _DataPageState extends State<DataPage> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text("DataPage"),
+          title: Text(AppLocalizations.of(context).historyPage),
         ),
         body: Column(
           // カレンダー表示

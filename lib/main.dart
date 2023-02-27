@@ -9,6 +9,7 @@ import 'package:management/src/model/database_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,8 +30,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
       return MaterialApp(
-        title: 'Point_System_Management',
+        title: "LifeRewards",
         theme: themeProvider.getTheme,
+        localizationsDelegates: AppLocalizations.localizationsDelegates, // 追加
+        supportedLocales: AppLocalizations.supportedLocales,
         home: const Navigation(),
       );
     });
@@ -80,26 +83,26 @@ class _NavigationState extends State<Navigation> {
                 _currentIndex = index;
               }),
               // ナビゲーションの設定
-              destinations: const [
+              destinations: [
                 NavigationDestination(
-                  selectedIcon: Icon(Icons.home),
-                  icon: Icon(Icons.home_outlined),
-                  label: 'Home',
+                  selectedIcon: const Icon(Icons.home),
+                  icon: const Icon(Icons.home_outlined),
+                  label: AppLocalizations.of(context).home,
                 ),
                 NavigationDestination(
-                  selectedIcon: Icon(Icons.description),
-                  icon: Icon(Icons.description_outlined),
-                  label: 'Task',
+                  selectedIcon: const Icon(Icons.description),
+                  icon: const Icon(Icons.description_outlined),
+                  label: AppLocalizations.of(context).task,
                 ),
                 NavigationDestination(
-                  selectedIcon: Icon(Icons.emoji_events),
-                  icon: Icon(Icons.emoji_events_outlined),
-                  label: 'Reward',
+                  selectedIcon: const Icon(Icons.emoji_events),
+                  icon: const Icon(Icons.emoji_events_outlined),
+                  label: AppLocalizations.of(context).reward,
                 ),
                 NavigationDestination(
-                  selectedIcon: Icon(Icons.calendar_month),
-                  icon: Icon(Icons.calendar_month_outlined),
-                  label: 'History',
+                  selectedIcon: const Icon(Icons.calendar_month),
+                  icon: const Icon(Icons.calendar_month_outlined),
+                  label: AppLocalizations.of(context).history,
                 ),
               ],
             ),

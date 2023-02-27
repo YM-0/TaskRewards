@@ -6,6 +6,7 @@ import 'package:management/src/view/reward/reward_input_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:management/src/store/point_store.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RewardPage extends StatefulWidget {
   const RewardPage({Key? key}) : super(key: key);
@@ -180,16 +181,18 @@ class _RewardPageState extends State<RewardPage> {
                         _pointStore.minus(item.point);
                         _historyStore.insert(item, model);
                         Fluttertoast.showToast(
-                          msg: '報酬獲得\n${item.point}ポイント消費',
+                          msg: AppLocalizations.of(context)
+                              .rewardToast(item.point),
                         );
                       } else {
                         Fluttertoast.showToast(
-                          msg: 'ポイントが足りません',
-                        );
+                            msg: AppLocalizations.of(context).rewardErrorToast,
+                            backgroundColor:
+                                const Color.fromARGB(250, 60, 60, 60));
                       }
                       Navigator.of(context).pop();
                     },
-                    child: const Text("報酬獲得"),
+                    child: Text(AppLocalizations.of(context).gainRewards),
                   ),
                 ),
                 Container(
@@ -199,9 +202,10 @@ class _RewardPageState extends State<RewardPage> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Text(
-                      "キャンセル",
-                      style: TextStyle(color: Color.fromARGB(255, 37, 36, 36)),
+                    child: Text(
+                      AppLocalizations.of(context).cancel,
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 37, 36, 36)),
                     ),
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.white),
@@ -219,7 +223,7 @@ class _RewardPageState extends State<RewardPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("REWARD"),
+        title: Text(AppLocalizations.of(context).rewardPage),
       ),
       // リスト一覧表示(並び替え可能にするためReorderableListView使用)
       body: ReorderableListView.builder(

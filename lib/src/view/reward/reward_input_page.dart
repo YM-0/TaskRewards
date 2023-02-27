@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:management/src/model/item_model.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:management/src/store/reward_list_store.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Todo入力画面のクラス
 ///
@@ -65,7 +66,7 @@ class _RewardInputPageState extends State<RewardInputPage> {
   void _showPicker(BuildContext context) {
     showDialog(
       builder: (context) => AlertDialog(
-        title: const Text("色選択"),
+        title: Text(AppLocalizations.of(context).colorSelect),
         content: SingleChildScrollView(
           child: BlockPicker(
             pickerColor: pickerColor,
@@ -74,7 +75,7 @@ class _RewardInputPageState extends State<RewardInputPage> {
         ),
         actions: <Widget>[
           ElevatedButton(
-            child: const Text("決定"),
+            child: Text(AppLocalizations.of(context).ok),
             onPressed: () {
               setState(() => selectedColor = pickerColor);
               _color = selectedColor.value;
@@ -93,7 +94,9 @@ class _RewardInputPageState extends State<RewardInputPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(_isCreateTask ? 'REWARD追加' : 'REWARD更新'),
+        title: Text(_isCreateTask
+            ? AppLocalizations.of(context).rewardInputPage
+            : AppLocalizations.of(context).rewardUpdatePage),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -114,11 +117,11 @@ class _RewardInputPageState extends State<RewardInputPage> {
                   width: 50,
                 ),
               ),
-              // タスク名入力用TextField
+              // リワード名入力用TextField
               TextField(
-                decoration: const InputDecoration(
-                  hintText: "報酬名を入力してください",
-                  labelText: "Reward",
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context).rewardHintText,
+                  labelText: AppLocalizations.of(context).reward,
                 ),
                 maxLength: 20,
                 maxLengthEnforcement:
@@ -132,9 +135,9 @@ class _RewardInputPageState extends State<RewardInputPage> {
               ),
               // ポイント設定用TextField
               TextField(
-                decoration: const InputDecoration(
-                  hintText: "ポイントを設定してください",
-                  labelText: "Point",
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context).pointHintText,
+                  labelText: AppLocalizations.of(context).point,
                 ),
                 maxLength: 5,
                 maxLengthEnforcement:
@@ -175,7 +178,9 @@ class _RewardInputPageState extends State<RewardInputPage> {
                     }
                   },
                   child: Text(
-                    _isCreateTask ? "リワード追加" : "リワード更新",
+                    _isCreateTask
+                        ? AppLocalizations.of(context).addReward
+                        : AppLocalizations.of(context).updateReward,
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
@@ -187,9 +192,9 @@ class _RewardInputPageState extends State<RewardInputPage> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text(
-                    "キャンセル",
-                    style: TextStyle(color: Colors.black),
+                  child: Text(
+                    AppLocalizations.of(context).cancel,
+                    style: const TextStyle(color: Colors.black),
                   ),
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.white),

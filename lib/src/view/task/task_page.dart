@@ -6,6 +6,7 @@ import 'package:management/src/view/task/task_input_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:management/src/store/point_store.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskPage extends StatefulWidget {
   const TaskPage({Key? key}) : super(key: key);
@@ -180,11 +181,13 @@ class _TaskPageState extends State<TaskPage> {
                       _pointStore.plus(item.point);
                       _historyStore.insert(item, model);
                       Fluttertoast.showToast(
-                        msg: 'タスク完了\n${item.point}ポイント獲得',
-                      );
+                          msg: AppLocalizations.of(context)
+                              .taskToast(item.point),
+                          backgroundColor:
+                              const Color.fromARGB(250, 60, 60, 60));
                       Navigator.of(context).pop();
                     },
-                    child: const Text("ポイント獲得"),
+                    child: Text(AppLocalizations.of(context).gainPoints),
                   ),
                 ),
                 Container(
@@ -194,9 +197,9 @@ class _TaskPageState extends State<TaskPage> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Text(
-                      "キャンセル",
-                      style: TextStyle(color: Colors.black),
+                    child: Text(
+                      AppLocalizations.of(context).cancel,
+                      style: const TextStyle(color: Colors.black),
                     ),
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.white),
@@ -214,7 +217,7 @@ class _TaskPageState extends State<TaskPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("TASK"),
+        title: Text(AppLocalizations.of(context).taskPage),
       ),
       // リスト一覧表示(並び替え可能にするためReorderableListView使用)
       body: ReorderableListView.builder(

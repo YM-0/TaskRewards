@@ -8,7 +8,7 @@ import 'package:management/src/store/history_store.dart';
 import 'package:management/src/store/point_store.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:management/main.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -43,24 +43,24 @@ class _SettingPageState extends State<SettingPage> {
     String resetName = "";
     switch (check) {
       case 1:
-        resetName = "ポイント";
+        resetName = AppLocalizations.of(context).pointText;
         break;
       case 2:
-        resetName = "履歴";
+        resetName = AppLocalizations.of(context).historyText;
         break;
     }
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text("確認"),
-            content: Text("$resetNameをリセットします。\nよろしいですか？"),
+            title: Text(AppLocalizations.of(context).confirm),
+            content: Text(AppLocalizations.of(context).resetMessage(resetName)),
             actions: [
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: const Text("Cancel")),
+                  child: Text(AppLocalizations.of(context).cancel)),
               TextButton(
                   onPressed: () {
                     switch (check) {
@@ -74,11 +74,11 @@ class _SettingPageState extends State<SettingPage> {
                         break;
                     }
                     Fluttertoast.showToast(
-                      msg: "$resetNameをリセットしました",
-                    );
+                        msg: AppLocalizations.of(context).resetToast(resetName),
+                        backgroundColor: const Color.fromARGB(250, 60, 60, 60));
                     Navigator.pop(context);
                   },
-                  child: const Text("OK"))
+                  child: Text(AppLocalizations.of(context).ok))
             ],
           );
         });
@@ -89,16 +89,17 @@ class _SettingPageState extends State<SettingPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("SETTING"),
+        title: Text(AppLocalizations.of(context).settingPage),
       ),
       body: SafeArea(
           child: SettingsList(
         sections: [
           SettingsSection(
-            title: const Text("DisplayMode"),
+            title: Text(AppLocalizations.of(context).displayMode),
             tiles: [
               SettingsTile.switchTile(
-                title: const Text("ダークモード"),
+                title: Text(AppLocalizations.of(context).darkMode),
+                leading: const Icon(Icons.settings_display),
                 initialValue: _settingStore.toggle,
                 onToggle: (value) {
                   ThemeProvider themeProvider =
@@ -112,17 +113,17 @@ class _SettingPageState extends State<SettingPage> {
             ],
           ),
           SettingsSection(
-            title: const Text("Reset"),
+            title: Text(AppLocalizations.of(context).reset),
             tiles: [
               SettingsTile(
-                title: const Text("ポイントリセット"),
+                title: Text(AppLocalizations.of(context).pointReset),
                 leading: const Icon(Icons.restore),
                 onPressed: (context) {
                   _resetDialog(1);
                 },
               ),
               SettingsTile(
-                title: const Text("履歴リセット"),
+                title: Text(AppLocalizations.of(context).historyReset),
                 leading: const Icon(Icons.restore),
                 onPressed: (context) {
                   _resetDialog(2);
@@ -131,10 +132,10 @@ class _SettingPageState extends State<SettingPage> {
             ],
           ),
           SettingsSection(
-            title: const Text("contact"),
+            title: Text(AppLocalizations.of(context).contact),
             tiles: [
               SettingsTile(
-                title: const Text("お問い合わせ"),
+                title: Text(AppLocalizations.of(context).inquiry),
                 leading: const Icon(Icons.contact_page),
                 onPressed: (context) {
                   Navigator.of(context)
@@ -144,8 +145,8 @@ class _SettingPageState extends State<SettingPage> {
                 },
               ),
               SettingsTile(
-                title: const Text("プライバシーポリシー"),
-                leading: const Icon(Icons.contact_page),
+                title: Text(AppLocalizations.of(context).privacyPolicy),
+                leading: const Icon(Icons.privacy_tip),
                 onPressed: (context) {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {

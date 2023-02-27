@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:management/src/store/task_list_store.dart';
 import 'package:management/src/model/item_model.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Todo入力画面のクラス
 ///
@@ -65,7 +66,7 @@ class _TaskInputPageState extends State<TaskInputPage> {
   void _showPicker(BuildContext context) {
     showDialog(
       builder: (context) => AlertDialog(
-        title: const Text("Color選択"),
+        title: Text(AppLocalizations.of(context).colorSelect),
         content: SingleChildScrollView(
           child: BlockPicker(
             pickerColor: pickerColor,
@@ -74,7 +75,7 @@ class _TaskInputPageState extends State<TaskInputPage> {
         ),
         actions: <Widget>[
           ElevatedButton(
-            child: const Text("決定"),
+            child: Text(AppLocalizations.of(context).ok),
             onPressed: () {
               setState(() => selectedColor = pickerColor);
               _color = selectedColor.value;
@@ -93,7 +94,9 @@ class _TaskInputPageState extends State<TaskInputPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(_isCreateTask ? 'Task追加' : 'Task更新'),
+        title: Text(_isCreateTask
+            ? AppLocalizations.of(context).taskInputPage
+            : AppLocalizations.of(context).taskUpdatePage),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -116,9 +119,9 @@ class _TaskInputPageState extends State<TaskInputPage> {
               ),
               // タスク名入力用TextField
               TextField(
-                decoration: const InputDecoration(
-                  hintText: "タスク名を入力してください",
-                  labelText: "Task",
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context).taskHintText,
+                  labelText: AppLocalizations.of(context).task,
                 ),
                 maxLength: 20,
                 // 入力されたテキストを変数に格納
@@ -130,9 +133,9 @@ class _TaskInputPageState extends State<TaskInputPage> {
               ),
               // ポイント設定用TextField
               TextField(
-                decoration: const InputDecoration(
-                  hintText: "ポイントを設定してください",
-                  labelText: "Point",
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context).pointHintText,
+                  labelText: AppLocalizations.of(context).point,
                 ),
                 maxLength: 5,
                 maxLengthEnforcement:
@@ -174,7 +177,9 @@ class _TaskInputPageState extends State<TaskInputPage> {
                     }
                   },
                   child: Text(
-                    _isCreateTask ? "タスク追加" : "タスク更新",
+                    _isCreateTask
+                        ? AppLocalizations.of(context).addTask
+                        : AppLocalizations.of(context).updateTask,
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
@@ -186,9 +191,9 @@ class _TaskInputPageState extends State<TaskInputPage> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text(
-                    "キャンセル",
-                    style: TextStyle(color: Colors.black),
+                  child: Text(
+                    AppLocalizations.of(context).cancel,
+                    style: const TextStyle(color: Colors.black),
                   ),
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.white),

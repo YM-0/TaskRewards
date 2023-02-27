@@ -5,10 +5,18 @@ class ThemeProvider extends ChangeNotifier {
   late ThemeData _selectedTheme;
 
   ThemeData light = ThemeData.light().copyWith(
+      // フォント設定　英語フォントからの日本語フォント
+      textTheme: ThemeData.light()
+          .textTheme
+          .apply(fontFamily: "Oswald", fontFamilyFallback: ["Noto Sans JP"]),
       colorScheme:
           const ColorScheme.light(primary: Color.fromARGB(255, 90, 173, 184)));
 
-  ThemeData dark = ThemeData.dark().copyWith(primaryColor: Colors.black);
+  ThemeData dark = ThemeData.dark().copyWith(
+      textTheme: ThemeData.dark()
+          .textTheme
+          .apply(fontFamily: "Oswald", fontFamilyFallback: ["Noto Sans JP"]),
+      primaryColor: Colors.black);
 
   ThemeProvider({required bool isDarkMode}) {
     _selectedTheme = isDarkMode ? dark : light;

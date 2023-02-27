@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PrivacyPolicy extends StatefulWidget {
   const PrivacyPolicy({Key? key}) : super(key: key);
@@ -66,7 +66,7 @@ class _PrivacyPolicyState extends State {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('PrivacyPolicy'),
+              title: Text(AppLocalizations.of(context).privacyPolicyPage),
             ),
             body: connectionStatus == true
                 ? IndexedStack(
@@ -94,12 +94,12 @@ class _PrivacyPolicyState extends State {
                             ),
                             child: Container(),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(
+                          Padding(
+                            padding: const EdgeInsets.only(
                               bottom: 20,
                             ),
                             child: Text(
-                              'インターネットに接続されていません',
+                              AppLocalizations.of(context).connectionError,
                             ),
                           ),
                         ],

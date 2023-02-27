@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ContactForm extends StatefulWidget {
   const ContactForm({Key? key}) : super(key: key);
@@ -66,7 +67,7 @@ class _ContactFormState extends State {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('お問い合わせ'),
+              title: Text(AppLocalizations.of(context).inquiry),
             ),
             body: connectionStatus == true
                 ? IndexedStack(

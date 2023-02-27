@@ -46,7 +46,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  google_fonts: ^3.0.1
+  google_fonts: ^4.0.3
   flutter_colorpicker: ^1.0.3
   fluttertoast: ^8.1.1
 
@@ -72,6 +72,24 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   generate: true
+
+  fonts:
+    - family: Noto Sans JP
+      fonts:
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Regular.otf
+          weight: 400
+        - asset: assets/fonts/Noto_Sans_JP/NotoSansJP-Bold.otf
+          weight: 700
+    - family: Oswald
+      fonts:
+        - asset: assets/fonts/Oswald/static/Oswald-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Oswald/static/Oswald-Bold.ttf
+          weight: 700
+    - family: Righteous
+      fonts:
+        - asset: assets/fonts/Righteous/Righteous-Regular.ttf
+          weight: 400
 
   # To add assets to your application, add an assets section, like this:
   # assets:

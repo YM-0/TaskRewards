@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:management/src/store/history_store.dart';
 import 'package:management/src/store/point_store.dart';
 import 'package:management/src/view/setting/setting_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -43,7 +44,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("HOME"),
+        title: Text(AppLocalizations.of(context).homePage),
         actions: [
           IconButton(
               onPressed: () {
@@ -68,9 +69,9 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       alignment: Alignment.topLeft,
                       margin: const EdgeInsets.fromLTRB(15, 15, 0, 0),
-                      child: const Text(
-                        "保有ポイント",
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context).totalPoint,
+                        style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -86,9 +87,9 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            const Text(
-              "今月",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Text(
+              AppLocalizations.of(context).month,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -107,9 +108,9 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Container(
                               margin: const EdgeInsets.fromLTRB(0, 10, 100, 10),
-                              child: const Text(
-                                "Task",
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context).task,
+                                style: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -131,9 +132,9 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Container(
                               margin: const EdgeInsets.fromLTRB(0, 10, 75, 10),
-                              child: const Text(
-                                "Reward",
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context).reward,
+                                style: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -148,9 +149,9 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            const Text(
-              "合計",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Text(
+              AppLocalizations.of(context).total,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -169,9 +170,9 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Container(
                               margin: const EdgeInsets.fromLTRB(0, 10, 100, 10),
-                              child: const Text(
-                                "Task",
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context).task,
+                                style: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -193,9 +194,9 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Container(
                               margin: const EdgeInsets.fromLTRB(0, 10, 75, 10),
-                              child: const Text(
-                                "Reward",
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context).reward,
+                                style: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                             ),
