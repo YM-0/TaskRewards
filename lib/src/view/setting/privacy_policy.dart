@@ -32,7 +32,7 @@ class _PrivacyPolicyState extends State {
         ),
       )
       ..loadRequest(Uri.parse(
-          'https://www.freeprivacypolicy.com/live/2f7184c4-622d-4640-9aa1-7e2dcf5e54cb'));
+          'https://www.freeprivacypolicy.com/live/15ec9c3d-dec6-42be-89ff-1bf7d5611cb5'));
   }
 
   doneLoading(String A) {

@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
       return MaterialApp(
-        title: "LifeRewards",
+        title: "TaskRewards",
         theme: themeProvider.getTheme,
         localizationsDelegates: AppLocalizations.localizationsDelegates, // 追加
         supportedLocales: AppLocalizations.supportedLocales,
