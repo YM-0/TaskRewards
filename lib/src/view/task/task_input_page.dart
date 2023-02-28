@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:management/src/store/task_list_store.dart';
-import 'package:management/src/model/item_model.dart';
+import 'package:task_rewards/src/store/task_list_store.dart';
+import 'package:task_rewards/src/model/item_model.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

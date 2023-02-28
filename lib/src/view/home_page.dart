@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:management/src/store/history_store.dart';
-import 'package:management/src/store/point_store.dart';
-import 'package:management/src/view/setting/setting_page.dart';
+import 'package:task_rewards/src/store/history_store.dart';
+import 'package:task_rewards/src/store/point_store.dart';
+import 'package:task_rewards/src/view/setting/setting_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {

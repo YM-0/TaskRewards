@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:management/services/admob.dart';
-import 'package:management/src/store/theme_store.dart';
-import 'package:management/src/view/history_page.dart';
-import 'package:management/src/view/home_page.dart';
-import 'package:management/src/view/reward/reward_page.dart';
-import 'package:management/src/view/task/task_page.dart';
-import 'package:management/src/model/database_helper.dart';
+import 'package:task_rewards/services/admob.dart';
+import 'package:task_rewards/src/store/theme_store.dart';
+import 'package:task_rewards/src/view/home_page.dart';
+import 'package:task_rewards/src/view/task/task_page.dart';
+import 'package:task_rewards/src/view/reward/reward_page.dart';
+import 'package:task_rewards/src/view/history_page.dart';
+import 'package:task_rewards/src/model/database_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,8 +13,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
   Admob.initialize();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   return runApp(ChangeNotifierProvider(
     child: const MyApp(),
     create: (context) => ThemeProvider(

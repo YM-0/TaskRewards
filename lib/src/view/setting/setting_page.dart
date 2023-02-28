@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:management/src/store/setting_store.dart';
-import 'package:management/src/store/theme_store.dart';
-import 'package:management/src/view/setting/contact_form.dart';
-import 'package:management/src/view/setting/privacy_policy.dart';
+import 'package:task_rewards/src/store/setting_store.dart';
+import 'package:task_rewards/src/store/theme_store.dart';
+import 'package:task_rewards/src/view/setting/contact_form.dart';
+import 'package:task_rewards/src/view/setting/privacy_policy.dart';
 import 'package:settings_ui/settings_ui.dart';
-import 'package:management/src/store/history_store.dart';
-import 'package:management/src/store/point_store.dart';
+import 'package:task_rewards/src/store/history_store.dart';
+import 'package:task_rewards/src/store/point_store.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

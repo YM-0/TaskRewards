@@ -1,6 +1,6 @@
-import 'package:management/src/model/item_model.dart';
-import 'package:management/src/model/history_model.dart';
-import 'package:management/src/model/database_helper.dart';
+import 'package:task_rewards/src/model/item_model.dart';
+import 'package:task_rewards/src/model/history_model.dart';
+import 'package:task_rewards/src/model/database_helper.dart';
 
 class HistoryStore {
   // イベントマップリスト

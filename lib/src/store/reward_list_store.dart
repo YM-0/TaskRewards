@@ -1,5 +1,5 @@
-import 'package:management/src/model/item_model.dart';
-import 'package:management/src/model/database_helper.dart';
+import 'package:task_rewards/src/model/item_model.dart';
+import 'package:task_rewards/src/model/database_helper.dart';
 
 // RewardStoreクラス
 // Rewardを取得/追加/更新/削除/保存/読み込み

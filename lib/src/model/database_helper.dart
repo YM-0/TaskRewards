@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:management/src/model/item_model.dart';
-import 'package:management/src/model/history_model.dart';
+import 'package:task_rewards/src/model/item_model.dart';
+import 'package:task_rewards/src/model/history_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';

@@ -1,6 +1,6 @@
 {
-    "name": "management",
-    "short_name": "management",
+    "name": "task_rewards",
+    "short_name": "task_rewards",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

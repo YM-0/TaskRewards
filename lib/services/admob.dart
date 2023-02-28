@@ -6,7 +6,7 @@ class AdMobService {
     // iOSとAndroidで広告ユニットIDを分岐させる
     if (Platform.isAndroid) {
       // Androidの広告ユニットID
-      return 'ca-app-pub-3940256099942544/6300978111';
+      return 'ca-app-pub-1296134417440328/2078851894';
     } else if (Platform.isIOS) {
       // iOSの広告ユニットID
       return "";

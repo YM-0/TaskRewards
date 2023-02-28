@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.management">
-   <application
-        android:label="management"
+    package="com.example.task_rewards">
+    <application
+        android:label="task_rewards"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -30,9 +30,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-            <meta-data
+        <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"
-            />
+            android:value="ca-app-pub-1296134417440328~2961538788"/>
     </application>
 </manifest>

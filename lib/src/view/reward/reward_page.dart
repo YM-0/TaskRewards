@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:management/src/store/history_store.dart';
-import 'package:management/src/model/item_model.dart';
-import 'package:management/src/store/reward_list_store.dart';
-import 'package:management/src/view/reward/reward_input_page.dart';
+import 'package:task_rewards/src/store/history_store.dart';
+import 'package:task_rewards/src/model/item_model.dart';
+import 'package:task_rewards/src/store/reward_list_store.dart';
+import 'package:task_rewards/src/view/reward/reward_input_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:management/src/store/point_store.dart';
+import 'package:task_rewards/src/store/point_store.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
