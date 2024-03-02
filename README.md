@@ -26,6 +26,8 @@ GooglePlayストアURL : https://play.google.com/store/apps/details?id=com.nigo.
 * 広告機能
   * Admobでのバナー広告を表示
 * ダークモード切替機能
+* 多言語対応
+  * 日本語と英語に対応
 
 ## 使用技術
 * Flutter 3.16.2
