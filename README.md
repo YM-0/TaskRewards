@@ -1,16 +1,40 @@
-# task_rewards
+# TaskRewards
+## 概要
 
-A new Flutter project.
+タスクとリワードを設定し、ポイント制で管理できるアプリです。自己管理やタスク管理、習慣化や目標管理を目的としています。  
+タスクと獲得するポイント、ポイントを消費することで獲得できる報酬をそれぞれ自分で設定することで、飴と鞭を管理できます。
 
-## Getting Started
+GooglePlayストアURL : https://play.google.com/store/apps/details?id=com.nigo.task_rewards
+![image](https://github.com/YM-0/TaskRewards/assets/108323257/b72b3f5e-2af9-4758-96c3-e31e9f99a8cb)
 
-This project is a starting point for a Flutter application.
+## 機能
+* ポイント確認機能
+  * 保有ポイント、今月と合計の獲得/消費ポイントを表示
+* タスク・リワードの登録機能
+  * タスク名、獲得ポイント、タスクの色を設定
+  * リワード名、消費ポイント、リワードの色を設定
+* タスク・リワードの更新機能
+  * タスク・リワードの編集ボタンを選択することで、更新画面に遷移し内容の変更が可能
+* タスク・リワードの削除機能
+  *  タスク・リワードの削除ボタンを選択することで、項目の削除が可能
+* リスト並び替え機能
+  * カードを長押ししスライドで並び替えが可能
+* カレンダー履歴機能
+  * カレンダーの日付ごとに、タスク完了・リワード獲得履歴の確認が可能
+* お問い合わせ機能
+  * webviewを用いて、Google Formで作成したお問い合わせフォームを表示
+* 広告機能
+  * Admobでのバナー広告を表示
+* ダークモード切替機能
 
-A few resources to get you started if this is your first Flutter project:
+## 使用技術
+* Flutter 3.16.2
+  * shared_preferences 2.0.15
+  * sqflite 2.2.4+1
+  * provider 6.0.5
+  * path_provider 2.2.4+1
+  * webview_flutter 4.0.5
+  * admob_flutter 3.0.0
+  * flutter_native_splash 2.2.18
+* Dart 3.2.2
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
