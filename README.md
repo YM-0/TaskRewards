@@ -22,7 +22,7 @@ GooglePlayストアURL : https://play.google.com/store/apps/details?id=com.nigo.
 * カレンダー履歴機能
   * カレンダーの日付ごとに、タスク完了・リワード獲得履歴の確認が可能
 * お問い合わせ機能
-  * webviewを用いて、Google Formで作成したお問い合わせフォームを表示
+  * Google Formで作成したお問い合わせフォームを表示
 * 広告機能
   * Admobでのバナー広告を表示
 * ダークモード切替機能
